@@ -1516,7 +1516,7 @@ if(S.vy>=0||S.cy-R<=B)grab();
 S.lt+=h;
 if(S.lt>1.5){setMode('stand');S.sq=.2;}
 }
-var downT=clamp(HUDL+175-OY,-700,100),upT=Math.max(150,HUDL+70-OY);
+var downT=clamp((HUDL+HS-BL)/2-40-OY,-700,400),upT=Math.max(150,HUDL+70-OY);
 S.camOff+=((m==='air'&&S.vy>0?downT:upT)-S.camOff)*(1-Math.exp(-3*h));
 if(m==='air'||m==='super')S.cam=Math.max(0,S.camOff-S.cy);
 else if(m==='hang'&&S.barAlt>0)S.cam=S.barAlt;

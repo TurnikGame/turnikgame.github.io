@@ -664,10 +664,10 @@ var sv=fbS();return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:fbW(sv)
 }
 // сверка с сервером: создать игрока, проверить бан/подарок/рост
 function fbSync(){
-if(FB.busy)return Promise.resolve(FB.state||'');FB.busy=true;
+if(FB.busy&&FB.pr)return FB.pr;FB.busy=true;
 var fin=function(st){FB.busy=false;FB.state=st;return st;};
 var srv=null;
-return fbAuth().then(function(){return fbGetT('players/'+FB.uid);}).then(function(rr){
+return FB.pr=fbAuth().then(function(){return fbGetT('players/'+FB.uid);}).then(function(rr){
 srv=rr.now;if(srv){TIME.off=srv-Date.now();TIME.state='ok';}var doc=rr.doc;
 if(doc&&/^\d{8}$/.test(doc.bid||'')&&doc.bid!==FB.bid){FB.bid=doc.bid;fbStore();}
 if(SKY_DIM){

@@ -679,19 +679,22 @@ return fbCommit([{update:{name:name,fields:fbFields(f)},updateTransforms:[{field
 .then(function(){FB.lock=!!f.lock;FB.s=sv;return fin(f.lock?'lock':'ok');});
 }
 FB.lock=!!doc.lock;if(FB.lock)return fin('lock');
-var gift=fbGiftVal(doc.gift);
-if(doc.gift!=null){var gd=fbGiftApply(doc.gift);if(gd){save();hud();applySkin(skinById(P.skin));buildTricks();popup(CX,150,'Подарок от создателя: '+gd+'!','#ffd23f',17,3.5);}sv=fbS();w=fbW(sv);}
+var gift=fbGiftVal(doc.gift),gd='',snap=null;
+if(doc.gift!=null){snap=JSON.stringify(P);gd=fbGiftApply(doc.gift);sv=fbS();w=fbW(sv);}
+var undo=function(){if(snap){var o=JSON.parse(snap);for(var k in o)P[k]=o[k];}};
 return fbCommit([]).then(function(j0){
 var srv=Date.parse(j0.commitTime||'');if(!isFinite(srv))throw new Error('time');
 TIME.off=srv-Date.now();TIME.state='ok';
 var hrs=Math.max(0,(srv-(+doc.t||0)-5000)/3600e3),x=(+doc.cr||0)+FCFG.rate*hrs,credit=Math.min(FCFG.bucket,x);
 var need=w-(+doc.w||0)-gift;
-if(need>credit+FCFG.grace){var lack=need-FCFG.grace-credit;FB.fast=lack>FCFG.bucket-credit?-1:Math.ceil(lack/FCFG.rate*60);return fin('fast');}
+if(need>credit+FCFG.grace){undo();var lack=need-FCFG.grace-credit;FB.fast=lack>FCFG.bucket-credit?-1:Math.ceil(lack/FCFG.rate*60);return fin('fast');}
 FB.fast=0;
 var cr=Math.max(-FCFG.grace,credit-Math.max(0,need)-500);
 return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:w,cr:cr+0.5,bid:FB.bid})},updateMask:{fieldPaths:['s','w','cr','bid','gift']},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:true}}])
-.then(function(){FB.s=sv;return fin('ok');});
-});
+.then(function(){FB.s=sv;
+if(gd){FX_SKIP=3;save();hud();applySkin(skinById(P.skin));buildTricks();if(!shopEl.hidden)renderShop();popup(CX,150,'Подарок от создателя: '+gd+'!','#ffd23f',17,3.5);}
+return fin('ok');},function(e){undo();throw e;});
+},function(e){undo();throw e;});
 }).catch(function(e){FB.err=String(e&&e.message||e).slice(0,40);return fin('net');});
 }
 function srvSync(){fbSync();}
@@ -2934,7 +2937,7 @@ renderDaily();
 $('giftBtn').addEventListener('click',openDaily);
 $('dclose').addEventListener('click',closeDaily);
 $('dClaim').addEventListener('click',claimDaily);
-function openShop(){saveInfo();S.paused=true;clearHolds();shopEl.hidden=false;renderShop();$('close').focus();}
+function openShop(){try{fbSync();}catch(e){}saveInfo();S.paused=true;clearHolds();shopEl.hidden=false;renderShop();$('close').focus();}
 function closeShop(){REVEAL=null;$('codeBox').hidden=true;$('codeApply').hidden=true;$('codeMsg').textContent='';shopEl.hidden=true;S.paused=false;last=performance.now();}
 $('shopBtn').addEventListener('click',openShop);
 $('teleBtn').addEventListener('click',openTele);$('tclose').addEventListener('click',closeTele);
@@ -3756,7 +3759,7 @@ if(tk){S.keyT[tk]=false;var tb=$('tr-'+tk);if(tb)tb.classList.remove('on');}
 });
 window.addEventListener('blur',function(){clearHolds();S.cvS=0;});
 window.addEventListener('resize',fit);
-fit();buildTricks();setMode('hang');hud();updateUi();updGift();syncTime();setInterval(function(){if(document.visibilityState==='visible')syncTime();},120000);setInterval(function(){if(document.visibilityState==='visible')srvSync();},240000);setTimeout(srvSync,9000);
+fit();buildTricks();setMode('hang');hud();updateUi();updGift();syncTime();setInterval(function(){if(document.visibilityState==='visible')syncTime();},120000);setInterval(function(){if(document.visibilityState==='visible')srvSync();},120000);setTimeout(srvSync,9000);
 startIntro(-2.55);
 setTimeout(function(){var sp=document.getElementById('splash');if(sp){sp.classList.add('out');setTimeout(function(){sp.remove();},1000);}},2300);
 var TUT={on:false,s:'',got:false,pause:false,last:'',sub:''};
@@ -3816,7 +3819,8 @@ bub.style.left=Math.round((g.width-bw)/2)+'px';bub.style.top=Math.round(top)+'px
 function tutTick(){
 if(!TUT.on)return;
 var root=$('tut'),m=S.mode,shopOpen=!shopEl.hidden;
-if(SKY_DIM||GY.open||BT.open||!dailyEl.hidden||TELE.open||(shopOpen&&TUT.s!=='shop')||(!shopOpen&&P.loc!=='earth')){root.hidden=true;return;}
+if(P.loc!=='earth'&&!S.heatGo){tutEnd();return;}
+if(SKY_DIM||GY.open||BT.open||!dailyEl.hidden||TELE.open||(shopOpen&&TUT.s!=='shop')){root.hidden=true;return;}
 root.classList.toggle('over',shopOpen);
 if(shopOpen){root.hidden=false;tutShop();return;}
 if(TUT.pause&&!S.paused){S.paused=true;clearHolds();}

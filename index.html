@@ -641,6 +641,16 @@ for(k in s.owned)SKINS.forEach(function(x){if(x.id===k)w+=x.price;});
 for(k in s.ownedBar)BARS.forEach(function(x){if(x.id===k)w+=x.price;});
 UPS.forEach(function(u){for(var i=0;i<(s.up[u.id]||0);i++)w+=u.costs[i];});
 return w+(s.gym?GYM_PRICE:0);}
+function fbPrice(list,id){for(var i=0;i<list.length;i++)if(list[i].id===id)return list[i].price||0;return 0;}
+function fbGiftVal(g){if(g==null)return 0;if(typeof g==='number')return Math.max(0,g);if(typeof g!=='object')return 0;
+return Math.max(0,+g.coins||0)+Math.max(0,+g.laps||0)/2+fbPrice(SKINS,String(g.skin||''))+fbPrice(BARS,String(g.bar||''));}
+function fbGiftApply(g){var out=[];
+if(typeof g==='number')g={coins:g};if(!g||typeof g!=='object')return '';
+var c=Math.max(0,Math.floor(+g.coins||0));if(c){P.coins=Math.min(CAP.coins-1,(P.coins||0)+c);out.push('+'+c+' монет');}
+var l=Math.max(0,Math.floor(+g.laps||0));if(l){P.circles=Math.min(CAP.circles-1,(P.circles||0)+l);out.push('+'+l+' кругов');}
+var sk=String(g.skin||'');if(sk&&fbPrice(SKINS,sk)>0){P.owned[sk]=1;P.skin=sk;out.push('скин «'+skinById(sk).name+'»');}
+var br=String(g.bar||'');if(br&&fbPrice(BARS,br)>0){P.ownedBar[br]=1;P.bar=br;out.push('турник «'+barById(br).name+'»');}
+return out.join(', ');}
 function fbBanWrite(doc){
 var reason=String((function(){try{return localStorage.getItem('turnik-fx2');}catch(e){return '';}})()||'Бан').slice(0,40);
 var name=fbName('players/'+FB.uid);
@@ -669,15 +679,19 @@ return fbCommit([{update:{name:name,fields:fbFields(f)},updateTransforms:[{field
 .then(function(){FB.lock=!!f.lock;FB.s=sv;return fin(f.lock?'lock':'ok');});
 }
 FB.lock=!!doc.lock;if(FB.lock)return fin('lock');
-var gift=Math.max(0,Math.floor(+doc.gift||0));
-if(gift>0){P.coins=Math.min(CAP.coins-1,(P.coins||0)+gift);save();hud();popup(CX,150,'Подарок от создателя: +'+gift+' монет!','#ffd23f',18,3);sv=fbS();w=fbW(sv);}
-var hrs=Math.max(0,(nowT()-(+doc.t||0)-60000)/3600e3),x=(+doc.cr||0)+FCFG.rate*hrs,credit=Math.min(FCFG.bucket,x);
+var gift=fbGiftVal(doc.gift);
+if(doc.gift!=null){var gd=fbGiftApply(doc.gift);if(gd){save();hud();applySkin(skinById(P.skin));buildTricks();popup(CX,150,'Подарок от создателя: '+gd+'!','#ffd23f',17,3.5);}sv=fbS();w=fbW(sv);}
+return fbCommit([]).then(function(j0){
+var srv=Date.parse(j0.commitTime||'');if(!isFinite(srv))throw new Error('time');
+TIME.off=srv-Date.now();TIME.state='ok';
+var hrs=Math.max(0,(srv-(+doc.t||0)-5000)/3600e3),x=(+doc.cr||0)+FCFG.rate*hrs,credit=Math.min(FCFG.bucket,x);
 var need=w-(+doc.w||0)-gift;
 if(need>credit+FCFG.grace){var lack=need-FCFG.grace-credit;FB.fast=lack>FCFG.bucket-credit?-1:Math.ceil(lack/FCFG.rate*60);return fin('fast');}
 FB.fast=0;
 var cr=Math.max(-FCFG.grace,credit-Math.max(0,need)-500);
 return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:w,cr:cr+0.5,bid:FB.bid})},updateMask:{fieldPaths:['s','w','cr','bid','gift']},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:true}}])
 .then(function(){FB.s=sv;return fin('ok');});
+});
 }).catch(function(e){FB.err=String(e&&e.message||e).slice(0,40);return fin('net');});
 }
 function srvSync(){fbSync();}

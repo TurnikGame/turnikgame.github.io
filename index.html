@@ -19,7 +19,7 @@
 #skyveil[hidden]{display:none}
 .bb-in{max-width:340px;background:#1b2b4f;border-radius:22px;box-shadow:inset 0 0 0 3px #ff5f7a,0 20px 60px rgba(0,0,0,.5);padding:24px;text-align:center;display:grid;gap:12px;animation:splIn .5s cubic-bezier(.2,1.4,.4,1) both}
 .bb-ic{font-size:64px;line-height:1}
-#skyveil h2{margin:0;font:800 26px/1.15 Unbounded,'Arial Black',system-ui,sans-serif;color:#ff5f7a}
+#skyveil h2{margin:0;font:700 26px/1.15 var(--font-display);color:#ff5f7a}
 #skyveil p{margin:0;color:#d8e3ff;font-size:15px}
 #veilIn{-webkit-user-select:text;user-select:text;font-size:13px!important;height:48px;border-radius:12px;border:2px solid #3a4c7a;background:#101c36;color:#fff;font-size:16px;padding:0 12px;text-align:center}
 .bb-id{display:block;margin-top:2px;font:600 11px/1 ui-monospace,Menlo,monospace;color:rgba(216,227,255,.45);letter-spacing:.12em;user-select:text;-webkit-user-select:text}
@@ -30,8 +30,8 @@
 #splash.out{opacity:0;pointer-events:none}
 .spl-in{display:grid;justify-items:center;gap:14px;animation:splIn .9s cubic-bezier(.2,1.4,.4,1) both}
 .spl-in svg{filter:drop-shadow(0 10px 24px rgba(255,107,44,.45));animation:splBob 2.2s ease-in-out infinite}
-#splash h1{margin:0;font:800 46px/1 Unbounded,'Arial Black',system-ui,sans-serif;letter-spacing:.06em;color:#fff;text-shadow:0 4px 0 #1b1530,0 0 22px rgba(255,210,63,.55)}
-.spl-by{position:absolute;bottom:max(28px,env(safe-area-inset-bottom,0px));left:0;right:0;margin:0;text-align:center;font:700 13px/1 Onest,system-ui,sans-serif;letter-spacing:.12em;color:rgba(255,255,255,.65);animation:splIn 1s .5s both}
+#splash h1{margin:0;font:800 46px/1 var(--font-display);letter-spacing:.06em;color:#fff;text-shadow:0 4px 0 #1b1530,0 0 22px rgba(255,210,63,.55)}
+.spl-by{position:absolute;bottom:max(28px,env(safe-area-inset-bottom,0px));left:0;right:0;margin:0;text-align:center;font:700 13px/1 var(--font-body),system-ui,sans-serif;letter-spacing:.12em;color:rgba(255,255,255,.65);animation:splIn 1s .5s both}
 @keyframes splIn{from{opacity:0;transform:scale(.6) translateY(20px)}to{opacity:1;transform:none}}
 @keyframes splBob{50%{transform:translateY(-6px) rotate(-3deg)}}
 *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
@@ -116,6 +116,37 @@ h1{margin:0;font:800 13px/1.2 var(--font-display);letter-spacing:.08em;text-tran
 .meter.alt .track i{background:linear-gradient(90deg,#7fd0ff,#c59bff)}
 .meter.full .track i{background:var(--lime);animation:glow .45s ease-in-out infinite alternate}
 @keyframes glow{from{filter:brightness(1)}to{filter:brightness(1.25)}}
+html.px{--px-ink:#0b0a18}
+html.px *,html.px *::before,html.px *::after{border-radius:0!important}
+html.px canvas{image-rendering:pixelated;image-rendering:crisp-edges}
+html.px body{background-color:#141a33;background-image:repeating-conic-gradient(rgba(255,255,255,.025) 0 25%,transparent 0 50%);background-size:4px 4px}
+html.px button{
+  clip-path:polygon(0 4px,4px 4px,4px 0,calc(100% - 4px) 0,calc(100% - 4px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 4px) calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 4px),0 calc(100% - 4px));
+  box-shadow:inset 0 -6px 0 rgba(0,0,0,.34),inset 0 4px 0 rgba(255,255,255,.38),inset 4px 0 0 rgba(255,255,255,.16),inset -4px 0 0 rgba(0,0,0,.16)!important;
+  transition:none!important}
+html.px button:active:not(:disabled){transform:translateY(3px)!important;box-shadow:inset 0 6px 0 rgba(0,0,0,.34),inset 0 -2px 0 rgba(255,255,255,.2)!important}
+html.px button:disabled{filter:grayscale(.55) brightness(.8)}
+html.px .tab{box-shadow:none!important;text-shadow:none}
+html.px .tab.on{box-shadow:inset 0 -5px 0 rgba(0,0,0,.25),inset 0 4px 0 rgba(255,255,255,.6)!important}
+html.px .swap,html.px .card,html.px .tabs,html.px .bb-in,html.px .shop-head{
+  box-shadow:0 0 0 4px var(--px-ink),inset 0 0 0 4px #33467a,inset 0 0 0 6px var(--px-ink)!important;
+  background-image:repeating-conic-gradient(rgba(255,255,255,.035) 0 25%,transparent 0 50%);background-size:4px 4px}
+html.px .shop-head{padding:10px;background-color:var(--navy-2)}
+html.px .shop{background-color:#0d1226;background-image:repeating-conic-gradient(rgba(255,255,255,.03) 0 25%,transparent 0 50%);background-size:4px 4px}
+html.px .card canvas{box-shadow:0 0 0 3px var(--px-ink)}
+html.px .stat b,html.px h2,html.px h3{text-shadow:3px 3px 0 var(--px-ink)}
+html.px .k{text-shadow:2px 2px 0 var(--px-ink)}
+html.px .track{box-shadow:0 0 0 3px var(--px-ink),inset 0 0 0 3px #33467a!important;height:18px}
+html.px .track i{background-image:repeating-linear-gradient(90deg,transparent 0 8px,rgba(0,0,0,.4) 8px 10px),linear-gradient(90deg,#ffd23f,var(--orange))}
+html.px .meter.alt .track i{background-image:repeating-linear-gradient(90deg,transparent 0 8px,rgba(0,0,0,.4) 8px 10px),linear-gradient(90deg,#7fd0ff,#c59bff)}
+html.px .meter.full .track i{background-image:repeating-linear-gradient(90deg,transparent 0 8px,rgba(0,0,0,.4) 8px 10px);background-color:var(--lime)}
+html.px .hwban{box-shadow:0 0 0 3px var(--px-ink),inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.4)}
+html.px #status{text-shadow:2px 2px 0 #000}
+.gfx-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gfx-row button.sel{outline:3px solid #fff;outline-offset:-7px}
+.tabs{grid-template-columns:none!important;grid-auto-flow:column;grid-auto-columns:1fr}
+.tabs .tab{font-size:12.5px;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+canvas#ct{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;image-rendering:auto}
 canvas#c{
   position:absolute;inset:0;width:100%;height:100%;display:block;
   touch-action:none;user-select:none;-webkit-user-select:none;
@@ -247,8 +278,11 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @keyframes tfg{50%{transform:translate(-50%,9px)}}
 .tmini{display:block;width:auto;height:34px;margin:6px auto 0;padding:0 14px;border:0;border-radius:10px;background:#2c3f6b;color:#d8e3ff;font:700 13px/1 var(--font-body);box-shadow:0 3px 0 #16223f;cursor:pointer}
 .tmini:active{transform:translateY(2px);box-shadow:0 1px 0 #16223f}
+.hwban{justify-self:center;background:#ff7a1a;color:#1b1530;font:800 12px/1 var(--font-display);padding:6px 12px;box-shadow:0 3px 0 #8a3a00;letter-spacing:.04em;pointer-events:none}
 #teleBtn{height:42px;font-size:13px;background:linear-gradient(135deg,#c59bff,#7fe8ff);box-shadow:0 4px 0 #6b45b0;touch-action:manipulation;color:#1b1530}
 #teleBtn:disabled{opacity:.6}
+#pumpBtn{height:42px;font-size:13px;background:#ff7a1a;box-shadow:0 4px 0 #8a3a00;touch-action:manipulation;color:#1b1530}
+#pumpBtn:disabled{opacity:.6}
 #telecv{width:100%;aspect-ratio:1/1;max-width:100%;border-radius:18px;box-shadow:inset 0 0 0 2px var(--edge);display:block;cursor:pointer}
 .tpwrap{position:relative}
 #homeBtn:disabled{opacity:.55}
@@ -267,6 +301,17 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wallet{display:flex;align-items:center;gap:6px;font:800 20px/1 var(--font-display);font-variant-numeric:tabular-nums}
 #close,#gclose,#bclose,#dclose,#tclose{height:40px;font-size:13px;border-radius:14px;background:#d8e3ff;box-shadow:0 4px 0 #6f84b8;padding:0 14px;touch-action:manipulation}
 
+.genrow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 10px;font-size:14px}
+.genrow small{grid-column:1/-1;color:var(--mute);font-size:11px;margin-top:-2px}
+.genrow input[type=number],.genrow select{height:40px;min-width:120px;border-radius:10px;border:2px solid var(--edge);background:var(--navy);color:#fff;font:700 15px/1 inherit;padding:0 8px;-webkit-user-select:text;user-select:text}
+.genrow input[type=checkbox],.genchip input{width:22px;height:22px;accent-color:#b9f03c}
+.genall{display:flex;gap:8px}.genall button{height:36px;font-size:13px;padding:0 14px;border-radius:10px;background:#d8e3ff;box-shadow:0 3px 0 #6f84b8}
+.genrar{margin:4px 0 0;font-weight:800;font-size:13px}
+.genchips{display:flex;flex-wrap:wrap;gap:6px}
+.genchip{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:var(--navy);box-shadow:inset 0 0 0 2px var(--edge);font-size:13px;font-weight:700}
+.genchip.on{box-shadow:inset 0 0 0 2px #b9f03c}
+#genBox{width:100%;box-sizing:border-box;border-radius:12px;border:2px solid var(--edge);background:var(--navy);color:#cfe;font:12px/1.35 ui-monospace,Menlo,monospace;padding:8px;resize:vertical}
+/*/ADMIN*/
 .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--navy-2);padding:5px;border-radius:16px;box-shadow:inset 0 0 0 2px var(--edge)}
 .tab{height:42px;font-size:14px;border-radius:12px;background:transparent;color:var(--mute);box-shadow:none;touch-action:manipulation}
 .tab.on{background:var(--chalk);color:var(--ink);box-shadow:none;transform:none}
@@ -329,7 +374,7 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 <div class="rotate" aria-live="polite"><div class="ph"></div><b>Поверни планшет вертикально</b></div>
 <main class="game">
 <div id="tut" hidden><div class="tspot" id="tutSpot" hidden></div><div class="tbub" id="tutBub" role="dialog" aria-live="polite"><b class="who">Человечек</b><span id="tutT"></span><div class="trow"><button type="button" id="tutB" hidden>Поехали!</button><button type="button" id="tutSkip">Пропустить</button></div><i class="tail down" id="tutTail"></i></div></div>
-  <canvas id="c" aria-label="Человечек на турнике"></canvas>
+  <canvas id="c" aria-label="Человечек на турнике"></canvas><canvas id="ct" aria-hidden="true"></canvas>
   <div class="hudbar" id="hudbar">
   <div class="top">
     <h1>Человечек на турнике</h1>
@@ -340,12 +385,13 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <div class="meter" id="meter"><span class="k" id="mk">Размах</span><div class="track"><i id="fill"></i></div></div>
     <div class="stat right"><span class="k">Круги</span><b><span class="ring-i"></span><span id="best">0</span></b></div>
   </header>
+  <div id="hwBan" class="hwban" hidden>🎃 Хеллоуин · <span id="hwLeft">10:00</span></div>
   </div>
   <div class="bottom" id="bottom">
   <p id="status" aria-live="polite" hidden></p>
   <div class="pad">
     <button id="big" type="button">Раскачаться</button>
-    <div class="row2" id="row2"><button id="drop" type="button">Отпустить</button><button id="homeBtn" type="button" hidden>🌍 На Землю</button><button id="teleBtn" type="button" hidden>🌀 Телепорт</button></div>
+    <div class="row2" id="row2"><button id="drop" type="button">Отпустить</button><button id="homeBtn" type="button" hidden>🌍 На Землю</button><button id="teleBtn" type="button" hidden>🌀 Телепорт</button><button id="pumpBtn" type="button" hidden>🎃 +10 000</button></div>
     <button type="button" id="spReach" class="reach" hidden>Тянись! 💪</button>
     <div class="spc" id="spc" hidden>
       <button type="button" id="spL" class="sun">Раскачаться</button><button type="button" id="spGo">Отпустить</button>
@@ -377,9 +423,18 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <div class="tabs t4">
       <button id="tabSkins" class="tab on" type="button">Одежда</button>
       <button id="tabBars" class="tab" type="button">Турники</button>
-      <button id="tabUps" class="tab" type="button">Прокачка</button>
+      <button id="tabUps" class="tab" type="button">Прокачка</button><button id="tabSet" class="tab" type="button">Настройки</button>
     </div>
     <div class="list" id="list"></div>
+    <div id="setBox" class="list ups" hidden>
+    <div class="swap" id="gfxBox">
+      <h3>Графика</h3>
+      <p>Пиксели: настоящий ретро-стиль, как на старой приставке. Красивая: гладкая графика.</p>
+      <div class="gfx-row">
+        <button id="gfxPx" type="button">👾 Пиксели</button>
+        <button id="gfxHd" type="button">✨ Красивая</button>
+      </div>
+    </div>
     <div class="swap" id="xfer">
       <h3>Перенос прогресса</h3>
       <p>Код переносит монеты, скины, мышцы и всё остальное на другой телефон.</p>
@@ -402,7 +457,8 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <button type="button" id="tutAgain" class="tmini">🎓 Пройти обучение</button>
     <p class="note" id="timeInfo">Время: проверяем…</p>
     <p class="note" id="saveInfo">Прогресс сохраняется на этом устройстве.</p>
-    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.15</p>
+    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.16</p>
+    </div>
   </div>
 </div>
 
@@ -448,7 +504,7 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 <script>var LANG='ru';try{LANG=localStorage.getItem('turnik-lang')||'ru';}catch(e){}
 if(LANG!=='en')LANG='ru';
-var I18N=[["Твой ID: ", "Your ID: "],["Версия ", "Version "],["Ты забанен. Играть нельзя, пока тебя не разбанит создатель игры. Отправь ему свой ID:", "You are banned. You can’t play until the game’s creator unbans you. Send them your ID:"],["Прогресс вырос слишком быстро. Код не выдан. Напиши создателю игры, твой ID: ", "Progress grew too fast. No code issued. Message the game’s creator, your ID: "],["Создатель игры должен проверить твой прогресс. Отправь ему свой ID: ", "The game’s creator needs to check your progress. Send them your ID: "],["Код устарел: коды работают только 24 часа.", "Code expired: codes only work for 24 hours."],["Подарок от создателя: +", "Gift from the creator: +"],["Бан снят.", "Ban lifted."],["Код неверный.", "Invalid code."],["🎓 Пройти обучение", "🎓 Play the tutorial"],["Обучение только на Земле", "Tutorial is only on Earth"],["Привет! Я Человечек 👋 Научу тебя летать: от турника до самого Дальнего космоса!", "Hi! I’m Bar Guy 👋 I’ll teach you to fly: from the bar all the way to Deep space!"],["Ура! Мы в Дальнем космосе! 🚀 Теперь ты знаешь всё: круги, взлёт, серию «Идеально» и магазин. Дальше Луна, Марс и Солнце. Удачи!", "Hooray! We’re in Deep space! 🚀 Now you know it all: laps, launch, the “Perfect” streak and the shop. Next: the Moon, Mars and the Sun. Good luck!"],["Ура, летим в небо! 🚀 Жми «Влево» и «Вправо», я буду крутить сальто, за них дают круги.", "Hooray, we’re flying! 🚀 Tap “Left” and “Right” and I’ll do flips — flips give laps."],["Летим! «Влево» и «Вправо» крутят сальто.", "Flying! “Left” and “Right” do flips."],["Падаем! Перед землёй поверни меня ногами вниз, чтобы приземлиться ровно!", "Falling! Before the ground, turn me feet-down to land straight!"],["Здорово слетали! Запрыгивай обратно, покажу секрет.", "Great flight! Jump back on, I’ll show you a secret."],["Запрыгивай на турник!", "Jump on the bar!"],["Теперь ещё 5 «Идеально» подряд, и турник поднимется в Дальний космос ×3! Сейчас: ", "Now 5 more “Perfect” in a row and the bar rises to Deep space ×3! Now: "],["Турник возвращается на землю…", "The bar is coming back down…"],["Турник летит! 🚀 Тут каждый круг считается ×2, крути!", "The bar is flying! 🚀 Every lap here counts ×2 — spin!"],["Жми «Раскачаться», когда мои ноги проходят зелёное кольцо. Я раскачаюсь и сделаю круг!", "Tap “Swing” when my feet pass the green ring. I’ll swing up and make a full loop!"],["Есть круг! Крути ещё. Чем больше кругов подряд, тем выше я полечу. Кругов: ", "A loop! Keep spinning. The more loops in a row, the higher I’ll fly. Loops: "],["Теперь жми «Отпустить», когда справа вверху «↑ ВЗЛЁТ» горит зелёным, и я полечу в небо!", "Now tap “Let go” when “↑ LAUNCH” at the top right is green, and I’ll fly into the sky!"],["Цель: Дальний космос ×3! ", "Goal: Deep space ×3! "],["Секрет: ", "Secret: "],["10 «Идеально» подряд, и турник сам взлетит! Сейчас: ", "10 “Perfect” in a row and the bar takes off by itself! Now: "],["Ой, мимо, серия сначала. Жми, когда мои ноги в зелёном кольце!", "Oops, missed — the streak restarts. Tap when my feet are in the green ring!"],["Последнее задание: долети до Дальнего космоса ×3! Сделай 10 «Идеально» подряд, а наверху ещё 5.", "Final task: fly to Deep space ×3! Make 10 “Perfect” in a row, then 5 more up top."],["Секрет: жми точно, когда ноги в кольце. 10 «Идеально» подряд, и турник сам взлетит!", "Secret: tap exactly when my feet are in the ring. 10 “Perfect” in a row and the bar takes off by itself!"],["Смотри, сколько кругов! Пойдём в «Магазин» за новым скином!", "Look at all those laps! Let’s go to the “Shop” for a new skin!"],["На скин нужно ", "A skin costs "],[" монет. Накрути ещё ", " coins. Spin "],[" кругов, и пойдём в магазин!", " more laps and we’ll go shopping!"],["Красавчик! 😎 Закрывай магазин, летим в Дальний космос!", "Looking good! 😎 Close the shop, we’re flying to Deep space!"],["Вау, новый скин! Жми «Надеть».", "Wow, a new skin! Tap “Wear”."],["Открой вкладку «Одежда».", "Open the “Outfits” tab."],["Открывай «Сумку сюрприз: одежда»! Там случайный скин, и каждый скин умножает монеты.", "Open the “Surprise bag: outfit”! It has a random skin, and every skin multiplies coins."],["Сначала поменяй круги на монеты: жми «Все круги». 2 круга = 1 монета.", "First trade laps for coins: tap “All laps”. 2 laps = 1 coin."],["Пока не хватает монет на сумку (", "Not enough coins for the bag yet ("],["). Закрой магазин и накрути ещё кругов!", "). Close the shop and spin more laps!"],["Привет! Я Человечек 👋 Давай вместе долетим до открытого космоса!", "Hi! I’m Bar Guy 👋 Let’s fly all the way to outer space together!"],["Поехали!", "Let’s go!"],["Играть!", "Play!"],["Пропустить", "Skip"],["Человечек", "Bar Guy"],["Ура! Мы в открытом космосе! 🚀 Дальше ты сам: крути круги, отпускай на «↑ ВЗЛЁТ» и покупай скины в «Магазине». Удачи!", "Hooray! We’re in outer space! 🚀 Now it’s up to you: spin laps, let go on “↑ LAUNCH” and buy skins in the “Shop”. Good luck!"],["Турник летит! Держись, сейчас будет космос!", "The bar is flying! Hold on, space is coming!"],["Идеально! Попадай так ещё. 10 «Идеально» подряд, и турник взлетит в космос! Сейчас: ", "Perfect! Keep hitting it. 10 “Perfect” in a row and the bar flies to space! Now: "],["Ой, мимо, серия сначала. Жми «Раскачаться», когда мои ноги в зелёном кольце!", "Oops, missed — the streak restarts. Tap “Swing” when my feet are in the green ring!"],["Жми «Раскачаться», когда мои ноги проходят зелёное кольцо!", "Tap “Swing” when my feet pass the green ring!"],["Летим! «Влево» и «Вправо» крутят сальто, за них дают круги.", "We’re flying! “Left” and “Right” do flips, and flips give laps."],["Перед землёй поверни меня ногами вниз, чтобы приземлиться ровно!", "Before the ground, turn me feet-down to land straight!"],["Запрыгивай обратно на турник! Наша цель: 10 «Идеально» подряд.", "Jump back on the bar! Our goal: 10 “Perfect” in a row."],["Ай! Ничего, сейчас встанем…", "Ouch! It’s ok, getting up…"],["🌍 На Землю", "🌍 To Earth"],["Нет связи с сервером. Нужен интернет.", "No connection to the server. Internet needed."],["Прогресс вырос слишком быстро. Попробуй через ", "Progress grew too fast. Try again in "],["Прогресс вырос слишком быстро. Код не выдан, напиши создателю игры.", "Progress grew too fast. No code issued, contact the game’s creator."],["Ты забанен, код не выдан.", "You are banned, no code issued."],["Такого кода нет или он уже использован.", "This code doesn’t exist or was already used."],["Слишком много попыток. Подожди час.", "Too many attempts. Wait an hour."],["Подарочный код неверный или уже использован.", "The gift code is invalid or already used."],["Ошибка сервера. Попробуй позже.", "Server error. Try later."],["Код скопирован. Он работает один раз и 24 часа.", "Code copied. It works once, for 24 hours."],["Старые длинные коды больше не работают. Сделай новый код.", "Old long codes no longer work. Make a new code."],["! 5 «Идеально» подряд поднимут турник выше. Пробить землю можно только с ×5, отсюда будет обычный прыжок.", "! 5 “Perfect” in a row lift the bar higher. You can only smash the ground from ×5; from here it’s a normal jump."], ["Крутишь круги! Круги подряд и серия «Идеально» дают силу взлёта. Отпускай, когда горит «ВЗЛЁТ».", "You’re looping! Laps in a row and a “Perfect” streak power your launch. Let go when “LAUNCH” lights up."], ["Кольцо больше на 15% за уровень: легче попасть в «Идеально». И +1 круг за уровень к каждому кругу на серии", "Ring 15% bigger per level: easier “Perfect”. Plus +1 lap per lap on a streak"], ["«Влево» и «Вправо»: сальто, за них круги. Трюк держи и считай: раз, два, три, за него монеты.", "“Left” and “Right”: flips give laps. Hold a trick and count one, two, three for coins."], ["Падаешь! Рули «Влево» и «Вправо» мимо препятствий, красный знак «!» внизу покажет, где они.", "Falling! Steer “Left” and “Right” around obstacles; the red “!” shows where they are."], ["Жми «Раскачаться», когда ноги проходят кольцо. 10 «Идеально» подряд, и турник полетит!", "Tap “Swing” when the feet pass the ring. 10 “Perfect” in a row and the bar takes off!"], ["Ты на Луне! Тут каждый круг ×2 и все зоны вдвое ценнее. Запрыгивай на каменный турник.", "You’re on the Moon! Every lap ×2 and all zones are worth double. Jump on the stone bar."], ["Ты у Луны, круги ×5! «Отпустить»: проломишь землю и упадёшь в шахту с золотом.", "You’re at the Moon, laps ×5! “Let go” to smash the ground and fall into a gold mine."], ["Земля близко! Поставь точку в зелёную зону. Чем выше летал, тем она уже.", "Ground ahead! Put the dot in the green zone. The higher you flew, the narrower it gets."], ["Сохраняем… если нет интернета, прогресс пока лежит на этом устройстве.", "Saving… without internet, progress stays on this device for now."], ["Код переносит монеты, скины, мышцы и всё остальное на другой телефон.", "The code moves your coins, skins, muscles and everything else to another phone."], ["Луна: каждый круг ×2. Жми «Раскачаться», когда ноги проходят кольцо.", "Moon: every lap ×2. Tap “Swing” when the feet pass the ring."], ["Прогресс сохраняется в облаке твоего аккаунта и на этом устройстве.", "Progress is saved to your account’s cloud and this device."], ["Запрыгивай обратно на турник! Круги меняй на монеты в «Магазине».", "Jump back on the bar! Trade laps for coins in the “Shop”."], ["Дорожка, подтягивание, жим лёжа. Качай силу для взлёта и мышцы.", "Treadmill, pull-ups, bench press. Build launch power and muscles."], ["Код скопирован. Отправь его себе и вставь на другом телефоне.", "Code copied. Send it to yourself and paste it on the other phone."], ["Разбиваешь препятствия насквозь и получаешь за каждое +1 круг", "Smash through obstacles and get +1 lap for each"], ["Турник летит! Каждый круг тут считается по множителю зоны.", "The bar is flying! Every lap here counts with the zone multiplier."], ["Отпусти трюк! В позе трюка приземлиться нельзя.", "Release the trick! You can’t land in a trick pose."], ["Код неверный. Проверь, что скопирован целиком.", "Invalid code. Make sure you copied all of it."], ["Человечек меньше, препятствия облетать легче", "Smaller guy, easier to dodge obstacles"], [". Курс: 2 круга = 1 монета, за все получишь ", ". Rate: 2 laps = 1 coin, you’ll get for all: "], ["Точно заменить прогресс на этом телефоне?", "Replace progress on this phone?"], ["Упал, копилка за прыжок сгорела. Встаём…", "Fell — this jump’s stash is lost. Getting up…"], ["Прогресс сохраняется на этом устройстве.", "Progress is saved on this device."], ["Круги → взлёт → приземление. Победа: +", "Laps → launch → landing. Win: +"], ["Пол провалился, ты в золотой шахте! +", "The floor collapsed, you’re in a gold mine! +"], ["Ты на круге! Жми ещё, раскручивай!", "Full loop! Keep tapping, spin faster!"], ["4 монеты за счёт, до 12 за полёт", "4 coins per count, up to 12 per flight"], ["6 монет за счёт, до 18 за полёт", "6 coins per count, up to 18 per flight"], [" «Идеально» подряд, и выше на ", " more “Perfect” in a row to go up to "], ["Ещё ", ""], ["Турник возвращается на землю…", "The bar is coming back down…"], ["Шире зелёная зона приземления", "Wider green landing zone"], ["В позе трюка не приземлиться!", "Can’t land in a trick pose!"], ["Поверни планшет вертикально", "Turn your tablet upright"], ["Подтягивайся на перекладине", "Do pull-ups on the bar"], ["Этап 2: отпускай на взлёте!", "Stage 2: let go on the way up!"], ["Прокачать мышцы до уровня ", "Upgrade muscles to level "], ["упал, высота не засчитана", "fell, height not counted"], ["Штраф −20 000 монет.", "Fine: −20,000 coins."], ["С возвращением на Землю!", "Welcome back to Earth!"], ["Этап 3: приземлись ровно", "Stage 3: land straight"], ["Уже есть. Вместо него +", "Already owned. Instead +"], ["СУПЕР-ПАДЕНИЕ! Держись!", "SUPER FALL! Hold on!"], ["Мышцы выросли! Уровень ", "Muscles grew! Level "], ["Выдели код и скопируй.", "Select the code and copy it."], ["БАМ! Копилка −половина", "BAM! Stash −half"], ["Твой множитель монет ×", "Your coin multiplier ×"], ["Турник вернётся через ", "Bar returns in "], ["Беги как можно быстрее", "Run as fast as you can"], ["Плюх! Копилка сгорела", "Splat! Stash lost"], ["Сумка сюрприз: турник", "Surprise bag: bar"], ["Сумка сюрприз: одежда", "Surprise bag: outfit"], ["Сохранение загружено", "Save loaded"], ["ПЕРЕХВАТ! +60 монет", "BAR CATCH! +60 coins"], ["ОБРАТНО НАВЕРХ!", "BACK UP!"], ["ВЫРВАЛСЯ С СОЛНЦА!", "ESCAPED THE SUN!"], ["С Солнца не уйти: нужен заряд спортзала 500", "You can’t leave the Sun: you need a gym charge of 500"], ["Вернуться на Землю (заряд 500)", "Back to Earth (charge 500)"], ["На Землю: нужен заряд 500 (", "To Earth: need charge 500 ("], ["Корона", "Corona"], ["Протуберанцы", "Prominences"], ["Меркурий", "Mercury"], ["🔥 ЖАРА! Через 10 секунд тебя унесёт на Землю!", "🔥 HEAT! In 10 seconds you’ll be thrown back to Earth!"], ["Солнце перегрело тебя!", "The Sun overheated you!"], ["Телепорт заблокирован на 5 минут", "Teleport blocked for 5 minutes"], ["☀️ Жара: ", "☀️ Heat: "], ["Лицеист", "Lyceum Student"], ["Телепорт между мирами раз в 45 секунд (T). Только так можно попасть на Солнце", "Teleport between worlds every 45 minutes (T). The only way to reach the Sun"], ["Телепорт между мирами", "Teleport between worlds"], ["Нажми на планету, куда хочешь попасть.", "Tap the planet you want to go to."], ["Нажми ещё раз, чтобы подтвердить", "Tap again to confirm"], ["На Юпитер телепортироваться нельзя", "You can’t teleport to Jupiter"], ["Ты уже здесь", "You’re already here"], ["🌀 Телепорт через ", "🌀 Teleport in "], ["🌀 Телепорт", "🌀 Teleport"], ["ТЕЛЕПОРТ!", "TELEPORT!"], ["Добро пожаловать: ", "Welcome: "], ["Летим на Солнце!", "Flying to the Sun!"], ["ЛЕТИМ ВОКРУГ СОЛНЦА!", "FLYING AROUND THE SUN!"], ["Круг вокруг Солнца ", "Lap around the Sun "], ["Облетел Солнце ×", "Circled the Sun ×"], ["Облёт Солнца: ", "Sun orbit: "], [" из ", " of "], ["☀️ Солнце", "☀️ Sun"], ["🌍 Земля", "🌍 Earth"], ["🌙 Луна", "🌙 Moon"], ["🔴 Марс", "🔴 Mars"], ["🪐 Юпитер", "🪐 Jupiter"], ["Калькулятор разбана", "Unban calculator"], ["Только в версии игры в Claude. Впиши ID с экрана бана.", "Only in the Claude version. Enter the ID from the ban screen."], ["Посчитать код (Claude)", "Calculate code (Claude)"], ["Скопировать код", "Copy code"], ["Скопировано ✓", "Copied ✓"], ["Код выделен, скопируй", "Code selected, copy it"], ["Время: сервер ✓ (разница ", "Time: server ✓ (diff "], [" мин)", " min)"], ["Время: с телефона", "Time: from phone"], ["Время: нет связи с сервером", "Time: no server connection"], ["Время: проверяем…", "Time: checking…"], ["Ускорение игры!", "Game speed hack!"], ["Этот код старее твоего прогресса на этом устройстве. Загрузить можно только более новый код.", "This code is older than your progress on this device. Only a newer code can be loaded."], ["Ты забанен. Играть нельзя, пока тебя не разбанит создатель игры.", "You are banned. You can’t play until the game’s creator unbans you."], ["Код разбана", "Unban code"], ["Вставь код разбана", "Paste the unban code"], ["Проверяем…", "Checking…"], ["Ошибка подписи", "Signing error"], ["Разбанить", "Unban"], ["Неверный код", "Wrong code"], ["Сохранение взломано!", "Save was hacked!"], ["Ты забанен", "You are banned"], ["БАН", "SKY_DIM"], ["Подмена цифр!", "Fake numbers!"], ["Взлом игры!", "Game hacking!"], ["Слишком много монет!", "Too many coins!"], ["Перевод даты!", "Clock cheating!"], ["Проверяем время…", "Checking the time…"], ["Нужен интернет", "Internet needed"], ["Секунду…", "One second…"], ["Чтобы забрать награду, подключись к интернету и открой окно снова.", "To claim the reward, connect to the internet and open this window again."], ["Подожди", "Wait"], ["Тянись! 💪", "Reach! 💪"], ["Тянись к турнику!", "Reach for the bar!"], ["СУПЕРСКОРОСТЬ!", "SUPER SPEED!"], ["ТУРНИК", "TURNIK"], ["Летим на Землю!", "Flying to Earth!"], ["Летим на Луну!", "Flying to the Moon!"], ["Летим на Марс!", "Flying to Mars!"], ["ЮПИТЕР!", "JUPITER!"], ["БУМ! Отскок!", "BOOM! Bounce!"], ["Ты на орбите Солнца!", "You’re orbiting the Sun!"], ["Юпитер отбросил тебя обратно!", "Jupiter threw you back!"], ["Слишком жарко!", "Too hot!"], ["Солнце отправило тебя на Землю", "The Sun sent you back to Earth"], ["ПРИЗЕМЛИЛСЯ НА ЗЕМЛЮ!", "LANDED ON EARTH!"], ["ПРИЗЕМЛИЛСЯ НА ЛУНУ!", "LANDED ON THE MOON!"], ["ПРИЗЕМЛИЛСЯ НА МАРС!", "LANDED ON MARS!"], [" монет за космос", " coins for the space trip"], ["Летим к Солнцу… ", "Flying to the Sun… "], ["Ты как карликовая планета!", "You’re like a dwarf planet!"], ["Раскрутись и отпусти в нужный момент", "Spin up and let go at the right moment"], ["Открытый космос…", "Open space…"], ["Турник притягивает обратно!", "The bar pulls you back!"], ["Земля", "Earth"], ["Солнце", "Sun"], ["Ежедневные награды", "Daily rewards"], ["150 монет", "150 coins"], ["500 кругов", "500 laps"], ["300 монет + заряд", "300 coins + charge"], ["300 монет и полный заряд спортзала: следующий взлёт до самого верха", "300 coins and a full gym charge: your next launch goes to the very top"], ["Сумка одежды", "Outfit bag"], ["Бесплатная сумка сюрприз с одеждой", "Free surprise outfit bag"], ["800 монет", "800 coins"], ["Сумка турника", "Bar bag"], ["Бесплатная сумка сюрприз с турником", "Free surprise bar bag"], ["Сундук чемпиона", "Champion chest"], ["2000 монет и скин: эпический, легендарный или даже хроматический!", "2000 coins and a skin: epic, legendary or even chromatic!"], ["День ", "Day "], ["Сегодня: ", "Today: "], ["Завтра: ", "Tomorrow: "], ["Заходи каждый день. Пропустишь день, и серия начнётся с первого дня.", "Come back every day. Miss a day and the streak restarts from day 1."], ["Сегодняшняя награда уже получена. Приходи завтра!", "Today’s reward is claimed. Come back tomorrow!"], ["Приходи завтра", "Come back tomorrow"], ["Забрать", "Claim"], ["За высоту +", "Height bonus +"], ["Разбанено! Прогресс восстановлен, штраф −50 000 монет.", "Unbanned! Progress restored, fine: −50,000 coins."], ["Бан снят. Старые коды снова работают.", "Ban lifted. Old codes work again."], ["Левитация: зависаешь в воздухе (Q)", "Levitation: hover in the air (Q)"], ["Жабий прыжок: взлёт в 1,5 раза выше", "Frog jump: launch 1.5× higher"], ["ЖАБИЙ ПРЫЖОК ×1,5!", "FROG JUMP ×1.5!"], ["Жаба", "Frog"], ["ПРОБИЛ МАРС!", "SMASHED THROUGH MARS!"], ["ПРОБИЛ ЛУНУ!", "SMASHED THROUGH THE MOON!"], ["Этот код заблокирован: он сделан до того, как тебя поймали.", "This code is blocked: it was made before you got caught."], ["ТЫ НА МАРСЕ!", "YOU’RE ON MARS!"], ["+100 монет за полёт", "+100 coins for the flight"], ["Над Марсом", "Above Mars"], ["Фобос", "Phobos"], ["Юпитер", "Jupiter"], ["Сохранение повреждено, прогресс сброшен", "Save is corrupted, progress reset"], [". Повтор = 30% цены.", ". Duplicate = 30% of price."], [", сорвался с турника", ", slipped off the bar"], ["приземлился ровно (+", "landed straight (+"], ["Человечек на турнике", "Bar Guy"], ["Турник возвращается", "The bar is returning"], ["Жми штангу от груди", "Press the barbell"], ["Этап 1: крути круги", "Stage 1: spin laps"], ["Ранг понизился до «", "Rank dropped to «"], ["Прогресс загружен!", "Progress loaded!"], ["Загрузить прогресс", "Load progress"], ["Вернуться на Землю", "Back to Earth"], ["+50 монет за полёт", "+50 coins for the flight"], ["СИЛА ИЗ СПОРТЗАЛА!", "GYM POWER!"], ["2 круга = 1 монета", "2 laps = 1 coin"], ["Поменьше человечек", "Smaller guy"], ["Перенос прогресса", "Transfer progress"], ["Жми, чтобы начать", "Tap to start"], ["Серия идеальных ×", "Perfect streak ×"], ["Супер-бодибилдер!", "Super bodybuilder!"], ["ТУРНИК ВЗЛЕТАЕТ!", "THE BAR TAKES OFF!"], ["Хватит на круг!", "Enough for a loop!"], ["Только из сумки", "Bag only"], ["ПОЛ ПРОВАЛИЛСЯ!", "THE FLOOR CAVED IN!"], ["РАЗБИЛ! +1 круг", "SMASHED! +1 lap"], ["Спортзал закрыт", "Gym is locked"], ["Трюк «Супермен»", "Trick “Superman”"], ["Беговая дорожка", "Treadmill"], ["Другой соперник", "Another opponent"], ["СУПЕР-ПАДЕНИЕ!", "SUPER FALL!"], [" (высший ранг)", " (top rank)"], ["Сила из зала: ", "Gym power: "], ["Турник и полёт", "Bar & flight"], ["Дальний космос", "Deep space"], ["Серия прервана", "Streak broken"], ["Идеальный круг", "Perfect loop"], ["Мягкая посадка", "Soft landing"], ["Приземлиться!", "Land!"], ["Хроматический", "Chromatic"], ["Сверхредкий", "Super rare"], ["Стартовый", "Starter"], ["Пляжник", "Beachgoer"], ["Пират", "Pirate"], ["Рокер", "Rocker"], ["Диджей", "DJ"], ["Ковбой", "Cowboy"], ["Робот", "Robot"], ["Викинг", "Viking"], ["Огненный", "Fiery"], ["Футболист", "Footballer"], ["Лыжник", "Skier"], ["Повар", "Chef"], ["Рыбак", "Fisher"], ["Трюк «Шпагат»", "Trick “Splits”"], ["Сначала смени", "Swap first"], ["ОТПУСТИ ТРЮК!", "RELEASE TRICK!"], ["Летим наверх!", "Flying up!"], ["Получить код", "Get code"], ["Замечен бот!", "Bot detected!"], ["Обмен кругов", "Trade laps"], ["Подтягивание", "Pull-ups"], ["Новый ранг: ", "New rank: "], [", поражений ", ", losses "], ["РОВНО! ДЕРЖИ", "STRAIGHT! HOLD"], [" к множителю", " to multiplier"], ["Круги тут ×", "Laps here ×"], [" золота и +", " gold and +"], [" за алмазы.", " for diamonds."], [" до ранга «", " to rank «"], ["Открыть за ", "Unlock for "], ["Не хватает ", "Need "], ["Легендарный", "Legendary"], ["Твой ранг: ", "Your rank: "], ["Назад в зал", "Back to gym"], ["Приготовься", "Get ready"], ["Раскачаться", "Swing"], ["ВЫРОВНЯЙСЯ!", "STRAIGHTEN UP!"], ["ТЫ НА ЛУНЕ!", "YOU’RE ON THE MOON!"], ["БОДИБИЛДЕР!", "BODYBUILDER!"], [" ЗА АЛМАЗЫ!", " FOR DIAMONDS!"], ["Идеально! x", "Perfect! x"], ["+100 кругов", "+100 laps"], ["Ввести код", "Enter code"], ["Соперник: ", "Opponent: "], ["Отпустить!", "Let go!"], ["Запрыгнуть", "Jump on"], ["ЛЕВИТАЦИЯ!", "LEVITATION!"], ["Открыть · ", "Open · "], ["Продать · ", "Sell · "], ["без бонуса", "no bonus"], ["ПОЛЕТЕЛИ! ", "LIFTOFF! "], ["Пробиваем!", "Smashing!"], ["Взлёт до: ", "Launch to: "], [": максимум", ": max"], ["Супергерой", "Superhero"], ["Деревянный", "Wooden"], ["Эпический", "Epic"], ["К турнику", "To the bar"], ["ОТПУСКАЙ!", "LET GO!"], ["Отпустить", "Let go"], ["Левитация", "Levitation"], ["Купить · ", "Buy · "], [" за скины", " from skins"], ["Бонус +20", "Bonus +20"], ["Сорвался!", "Slipped!"], ["Полетели!", "Liftoff!"], ["Идеально!", "Perfect!"], ["Слабовато", "Weak"], ["Кто выше?", "Who’s higher?"], ["В секунду", "Per second"], ["Все круги", "All laps"], ["10 кругов", "10 laps"], ["Поражение", "Defeat"], ["Поставить", "Equip"], ["Над Луной", "Above the Moon"], ["Спортсмен", "Athlete"], ["Тюбетейка", "Skullcap"], ["Космонавт", "Cosmonaut"], [" кругов (", " laps ("], [" рейтинга", " rating"], ["Жим лёжа", "Bench press"], ["Рейтинг ", "Rating "], [". Побед ", ". Wins "], [" ЗОЛОТА!", " GOLD!"], ["Уровень ", "Level "], ["Выпало: ", "You got: "], ["монеты ×", "coins ×"], ["Монеты ×", "Coins ×"], ["Сорвался", "Slipped"], ["Полетел!", "Flying!"], [" нажатий", " taps"], ["Максимум", "Max"], ["Спортзал", "Gym"], ["Прокачка", "Upgrades"], ["Персонаж", "Character"], ["Копилка ", "Stash "], ["Супермен", "Superman"], ["Классика", "Classic"], ["Крылатый", "Winged"], ["Стальной", "Steel"], ["Обычный", "Common"], ["Ещё раз", "Again"], ["Ещё бой", "Another fight"], ["Заряд: ", "Charge: "], ["Мышцы: ", "Muscles: "], ["Нажатий", "Taps"], ["Победа!", "Victory!"], ["Летишь!", "Flying!"], ["Встаём…", "Getting up…"], ["Поймал!", "Caught it!"], ["Прыжок!", "Jump!"], ["Золото!", "Gold!"], ["Куплено", "Bought"], ["Понятно", "Got it"], ["КАЧАЛКА", "GYM"], ["Закрыть", "Close"], ["Сальто ", "Flip "], ["Высота ", "Height "], ["↑ ВЗЛЁТ", "↑ LAUNCH"], ["Магазин", "Shop"], ["Турники", "Bars"], ["КРУГ! x", "LAP! x"], ["У тебя ", "You have "], ["Новичок", "Rookie"], ["Серебро", "Silver"], ["Платина", "Platinum"], ["Легенда", "Legend"], ["Золотой", "Golden"], ["Леденец", "Candy"], [" кругов", " laps"], [" монет.", " coins."], ["Редкий", "Rare"], ["Сила: ", "Power: "], ["СИЛАЧ!", "STRONGMAN!"], ["МЫШЦЫ!", "MUSCLES!"], ["Хорошо", "Good"], ["Секунд", "Seconds"], ["Летим…", "Flying…"], ["Открыт", "Unlocked"], ["Надеть", "Wear"], ["Надето", "Worn"], ["МЫШЦЫ ", "MUSCLES "], ["Одежда", "Outfits"], ["В бой!", "Fight!"], ["СТАРТ!", "GO!"], ["Размах", "Swing"], ["Монеты", "Coins"], ["Вправо", "Right"], ["Звезда", "Star"], ["Шпагат", "Splits"], ["Чисто!", "Clean!"], ["ВЫШЕ! ", "HIGHER! "], ["Облака", "Clouds"], ["Космос", "Space"], ["Бронза", "Bronze"], ["Золото", "Gold"], ["Ниндзя", "Ninja"], ["Радуга", "Rainbow"], ["Руслан", "Ruslan"], ["Камила", "Kamila"], ["Динара", "Dinara"], ["Ильдар", "Ildar"], ["Сабина", "Sabina"], ["Айгуль", "Aigul"], ["Рамиль", "Ramil"], ["Зарина", "Zarina"], [" круга", " laps"], [" монет", " coins"], ["Парю ", "Floating "], ["Мимо!", "Miss!"], ["Ничья", "Draw"], ["Стоит", "Equipped"], ["Битва", "Battle"], ["Трюки", "Tricks"], ["КРУГ!", "LAP!"], ["Выйти", "Exit"], ["Готов", "Ready"], ["Круги", "Laps"], ["Влево", "Left"], ["Плюх!", "Splat!"], ["Аааа!", "Aaaah!"], ["Алмаз", "Diamond"], ["Таран", "Ram"], ["Тимур", "Timur"], ["Артур", "Artur"], ["Марат", "Marat"], ["Лейла", "Leyla"], ["Булат", "Bulat"], [" круг", " lap"], [" мон.", " c."], ["БАМ!", "BAM!"], ["Хоп!", "Hop!"], ["Упал", "Fell"], ["ЖМИ!", "TAP!"], ["Жми!", "Tap!"], ["Раз!", "One!"], ["Два!", "Two!"], ["Три!", "Three!"], ["Двор", "Yard"], ["Луна", "Moon"], ["Марс", "Mars"], ["Неон", "Neon"], ["Алия", "Aliya"], ["Амир", "Amir"], ["Ты ", "You "], ["Ты", "You"]],TRC=new Map(),CYR=/[А-Яа-яЁё]/;
+var I18N=[["Тыквенная ярость: взлёт ×3, всегда приземляешься на ноги, копилка ×2, препятствия разбиваешь насквозь (+100 монет и +3 круга за каждое)","Pumpkin rage: the 🎃 button gives +10,000 coins every 3 minutes (P). Plus launch ×3, always land on your feet, piggy bank ×2, smash obstacles (+100 coins and +3 laps)"],["🎃 НАЧАЛСЯ ХЕЛЛОУИН! Тыква в магазине","🎃 HALLOWEEN HAS STARTED! Pumpkin in the shop"],["Ивент каждый час на 10 минут. Начнётся через ","Event every hour for 10 minutes. Starts in "],["Ивент идёт! Осталось ","Event is on! Left: "],["ТЫКВЕННАЯ ЯРОСТЬ ×3!","PUMPKIN RAGE ×3!"],["ТЫКВЕННАЯ ПОСАДКА!","PUMPKIN LANDING!"],["Тыква: копилка ×2","Pumpkin: piggy bank ×2"],["🎃 ТЫКВЕННЫЙ КЛАД +","🎃 PUMPKIN TREASURE +"],["Кошелёк полон!","Wallet is full!"],["🎃 через ","🎃 in "],["Только в Хеллоуин","Halloween only"],["ТЫКВА! +100 монет +3 круга","PUMPKIN! +100 coins +3 laps"],["🎃 Тыква твоя!","🎃 The Pumpkin is yours!"],["Хеллоуин","Halloween"],["Пиксели: настоящий ретро-стиль, как на старой приставке. Красивая: гладкая графика.","Pixels: true retro style, like an old console. Smooth: clean HD graphics."],["👾 Пиксели","👾 Pixels"],["✨ Красивая","✨ Smooth"],["Настройки","Settings"],["Графика","Graphics"],["Тыква","Pumpkin"],["Твой ID: ", "Your ID: "],["Версия ", "Version "],["Ты забанен. Играть нельзя, пока тебя не разбанит создатель игры. Отправь ему свой ID:", "You are banned. You can’t play until the game’s creator unbans you. Send them your ID:"],["Прогресс вырос слишком быстро. Код не выдан. Напиши создателю игры, твой ID: ", "Progress grew too fast. No code issued. Message the game’s creator, your ID: "],["Создатель игры должен проверить твой прогресс. Отправь ему свой ID: ", "The game’s creator needs to check your progress. Send them your ID: "],["Код устарел: коды работают только 24 часа.", "Code expired: codes only work for 24 hours."],["Подарок от создателя: +", "Gift from the creator: +"],["Бан снят.", "Ban lifted."],["Код неверный.", "Invalid code."],["🎓 Пройти обучение", "🎓 Play the tutorial"],["Обучение только на Земле", "Tutorial is only on Earth"],["Привет! Я Человечек 👋 Научу тебя летать: от турника до самого Дальнего космоса!", "Hi! I’m Bar Guy 👋 I’ll teach you to fly: from the bar all the way to Deep space!"],["Ура! Мы в Дальнем космосе! 🚀 Теперь ты знаешь всё: круги, взлёт, серию «Идеально» и магазин. Дальше Луна, Марс и Солнце. Удачи!", "Hooray! We’re in Deep space! 🚀 Now you know it all: laps, launch, the “Perfect” streak and the shop. Next: the Moon, Mars and the Sun. Good luck!"],["Ура, летим в небо! 🚀 Жми «Влево» и «Вправо», я буду крутить сальто, за них дают круги.", "Hooray, we’re flying! 🚀 Tap “Left” and “Right” and I’ll do flips — flips give laps."],["Летим! «Влево» и «Вправо» крутят сальто.", "Flying! “Left” and “Right” do flips."],["Падаем! Перед землёй поверни меня ногами вниз, чтобы приземлиться ровно!", "Falling! Before the ground, turn me feet-down to land straight!"],["Здорово слетали! Запрыгивай обратно, покажу секрет.", "Great flight! Jump back on, I’ll show you a secret."],["Запрыгивай на турник!", "Jump on the bar!"],["Теперь ещё 5 «Идеально» подряд, и турник поднимется в Дальний космос ×3! Сейчас: ", "Now 5 more “Perfect” in a row and the bar rises to Deep space ×3! Now: "],["Турник возвращается на землю…", "The bar is coming back down…"],["Турник летит! 🚀 Тут каждый круг считается ×2, крути!", "The bar is flying! 🚀 Every lap here counts ×2 — spin!"],["Жми «Раскачаться», когда мои ноги проходят зелёное кольцо. Я раскачаюсь и сделаю круг!", "Tap “Swing” when my feet pass the green ring. I’ll swing up and make a full loop!"],["Есть круг! Крути ещё. Чем больше кругов подряд, тем выше я полечу. Кругов: ", "A loop! Keep spinning. The more loops in a row, the higher I’ll fly. Loops: "],["Теперь жми «Отпустить», когда справа вверху «↑ ВЗЛЁТ» горит зелёным, и я полечу в небо!", "Now tap “Let go” when “↑ LAUNCH” at the top right is green, and I’ll fly into the sky!"],["Цель: Дальний космос ×3! ", "Goal: Deep space ×3! "],["Секрет: ", "Secret: "],["10 «Идеально» подряд, и турник сам взлетит! Сейчас: ", "10 “Perfect” in a row and the bar takes off by itself! Now: "],["Ой, мимо, серия сначала. Жми, когда мои ноги в зелёном кольце!", "Oops, missed — the streak restarts. Tap when my feet are in the green ring!"],["Последнее задание: долети до Дальнего космоса ×3! Сделай 10 «Идеально» подряд, а наверху ещё 5.", "Final task: fly to Deep space ×3! Make 10 “Perfect” in a row, then 5 more up top."],["Секрет: жми точно, когда ноги в кольце. 10 «Идеально» подряд, и турник сам взлетит!", "Secret: tap exactly when my feet are in the ring. 10 “Perfect” in a row and the bar takes off by itself!"],["Смотри, сколько кругов! Пойдём в «Магазин» за новым скином!", "Look at all those laps! Let’s go to the “Shop” for a new skin!"],["На скин нужно ", "A skin costs "],[" монет. Накрути ещё ", " coins. Spin "],[" кругов, и пойдём в магазин!", " more laps and we’ll go shopping!"],["Красавчик! 😎 Закрывай магазин, летим в Дальний космос!", "Looking good! 😎 Close the shop, we’re flying to Deep space!"],["Вау, новый скин! Жми «Надеть».", "Wow, a new skin! Tap “Wear”."],["Открой вкладку «Одежда».", "Open the “Outfits” tab."],["Открывай «Сумку сюрприз: одежда»! Там случайный скин, и каждый скин умножает монеты.", "Open the “Surprise bag: outfit”! It has a random skin, and every skin multiplies coins."],["Сначала поменяй круги на монеты: жми «Все круги». 2 круга = 1 монета.", "First trade laps for coins: tap “All laps”. 2 laps = 1 coin."],["Пока не хватает монет на сумку (", "Not enough coins for the bag yet ("],["). Закрой магазин и накрути ещё кругов!", "). Close the shop and spin more laps!"],["Привет! Я Человечек 👋 Давай вместе долетим до открытого космоса!", "Hi! I’m Bar Guy 👋 Let’s fly all the way to outer space together!"],["Поехали!", "Let’s go!"],["Играть!", "Play!"],["Пропустить", "Skip"],["Человечек", "Bar Guy"],["Ура! Мы в открытом космосе! 🚀 Дальше ты сам: крути круги, отпускай на «↑ ВЗЛЁТ» и покупай скины в «Магазине». Удачи!", "Hooray! We’re in outer space! 🚀 Now it’s up to you: spin laps, let go on “↑ LAUNCH” and buy skins in the “Shop”. Good luck!"],["Турник летит! Держись, сейчас будет космос!", "The bar is flying! Hold on, space is coming!"],["Идеально! Попадай так ещё. 10 «Идеально» подряд, и турник взлетит в космос! Сейчас: ", "Perfect! Keep hitting it. 10 “Perfect” in a row and the bar flies to space! Now: "],["Ой, мимо, серия сначала. Жми «Раскачаться», когда мои ноги в зелёном кольце!", "Oops, missed — the streak restarts. Tap “Swing” when my feet are in the green ring!"],["Жми «Раскачаться», когда мои ноги проходят зелёное кольцо!", "Tap “Swing” when my feet pass the green ring!"],["Летим! «Влево» и «Вправо» крутят сальто, за них дают круги.", "We’re flying! “Left” and “Right” do flips, and flips give laps."],["Перед землёй поверни меня ногами вниз, чтобы приземлиться ровно!", "Before the ground, turn me feet-down to land straight!"],["Запрыгивай обратно на турник! Наша цель: 10 «Идеально» подряд.", "Jump back on the bar! Our goal: 10 “Perfect” in a row."],["Ай! Ничего, сейчас встанем…", "Ouch! It’s ok, getting up…"],["🌍 На Землю", "🌍 To Earth"],["Нет связи с сервером. Нужен интернет.", "No connection to the server. Internet needed."],["Прогресс вырос слишком быстро. Попробуй через ", "Progress grew too fast. Try again in "],["Прогресс вырос слишком быстро. Код не выдан, напиши создателю игры.", "Progress grew too fast. No code issued, contact the game’s creator."],["Ты забанен, код не выдан.", "You are banned, no code issued."],["Такого кода нет или он уже использован.", "This code doesn’t exist or was already used."],["Слишком много попыток. Подожди час.", "Too many attempts. Wait an hour."],["Подарочный код неверный или уже использован.", "The gift code is invalid or already used."],["Ошибка сервера. Попробуй позже.", "Server error. Try later."],["Код скопирован. Он работает один раз и 24 часа.", "Code copied. It works once, for 24 hours."],["Старые длинные коды больше не работают. Сделай новый код.", "Old long codes no longer work. Make a new code."],["! 5 «Идеально» подряд поднимут турник выше. Пробить землю можно только с ×5, отсюда будет обычный прыжок.", "! 5 “Perfect” in a row lift the bar higher. You can only smash the ground from ×5; from here it’s a normal jump."], ["Крутишь круги! Круги подряд и серия «Идеально» дают силу взлёта. Отпускай, когда горит «ВЗЛЁТ».", "You’re looping! Laps in a row and a “Perfect” streak power your launch. Let go when “LAUNCH” lights up."], ["Кольцо больше на 15% за уровень: легче попасть в «Идеально». И +1 круг за уровень к каждому кругу на серии", "Ring 15% bigger per level: easier “Perfect”. Plus +1 lap per lap on a streak"], ["«Влево» и «Вправо»: сальто, за них круги. Трюк держи и считай: раз, два, три, за него монеты.", "“Left” and “Right”: flips give laps. Hold a trick and count one, two, three for coins."], ["Падаешь! Рули «Влево» и «Вправо» мимо препятствий, красный знак «!» внизу покажет, где они.", "Falling! Steer “Left” and “Right” around obstacles; the red “!” shows where they are."], ["Жми «Раскачаться», когда ноги проходят кольцо. 10 «Идеально» подряд, и турник полетит!", "Tap “Swing” when the feet pass the ring. 10 “Perfect” in a row and the bar takes off!"], ["Ты на Луне! Тут каждый круг ×2 и все зоны вдвое ценнее. Запрыгивай на каменный турник.", "You’re on the Moon! Every lap ×2 and all zones are worth double. Jump on the stone bar."], ["Ты у Луны, круги ×5! «Отпустить»: проломишь землю и упадёшь в шахту с золотом.", "You’re at the Moon, laps ×5! “Let go” to smash the ground and fall into a gold mine."], ["Земля близко! Поставь точку в зелёную зону. Чем выше летал, тем она уже.", "Ground ahead! Put the dot in the green zone. The higher you flew, the narrower it gets."], ["Сохраняем… если нет интернета, прогресс пока лежит на этом устройстве.", "Saving… without internet, progress stays on this device for now."], ["Код переносит монеты, скины, мышцы и всё остальное на другой телефон.", "The code moves your coins, skins, muscles and everything else to another phone."], ["Луна: каждый круг ×2. Жми «Раскачаться», когда ноги проходят кольцо.", "Moon: every lap ×2. Tap “Swing” when the feet pass the ring."], ["Прогресс сохраняется в облаке твоего аккаунта и на этом устройстве.", "Progress is saved to your account’s cloud and this device."], ["Запрыгивай обратно на турник! Круги меняй на монеты в «Магазине».", "Jump back on the bar! Trade laps for coins in the “Shop”."], ["Дорожка, подтягивание, жим лёжа. Качай силу для взлёта и мышцы.", "Treadmill, pull-ups, bench press. Build launch power and muscles."], ["Код скопирован. Отправь его себе и вставь на другом телефоне.", "Code copied. Send it to yourself and paste it on the other phone."], ["Разбиваешь препятствия насквозь и получаешь за каждое +1 круг", "Smash through obstacles and get +1 lap for each"], ["Турник летит! Каждый круг тут считается по множителю зоны.", "The bar is flying! Every lap here counts with the zone multiplier."], ["Отпусти трюк! В позе трюка приземлиться нельзя.", "Release the trick! You can’t land in a trick pose."], ["Код неверный. Проверь, что скопирован целиком.", "Invalid code. Make sure you copied all of it."], ["Человечек меньше, препятствия облетать легче", "Smaller guy, easier to dodge obstacles"], [". Курс: 2 круга = 1 монета, за все получишь ", ". Rate: 2 laps = 1 coin, you’ll get for all: "], ["Точно заменить прогресс на этом телефоне?", "Replace progress on this phone?"], ["Упал, копилка за прыжок сгорела. Встаём…", "Fell — this jump’s stash is lost. Getting up…"], ["Прогресс сохраняется на этом устройстве.", "Progress is saved on this device."], ["Круги → взлёт → приземление. Победа: +", "Laps → launch → landing. Win: +"], ["Пол провалился, ты в золотой шахте! +", "The floor collapsed, you’re in a gold mine! +"], ["Ты на круге! Жми ещё, раскручивай!", "Full loop! Keep tapping, spin faster!"], ["4 монеты за счёт, до 12 за полёт", "4 coins per count, up to 12 per flight"], ["6 монет за счёт, до 18 за полёт", "6 coins per count, up to 18 per flight"], [" «Идеально» подряд, и выше на ", " more “Perfect” in a row to go up to "], ["Ещё ", ""], ["Турник возвращается на землю…", "The bar is coming back down…"], ["Шире зелёная зона приземления", "Wider green landing zone"], ["В позе трюка не приземлиться!", "Can’t land in a trick pose!"], ["Поверни планшет вертикально", "Turn your tablet upright"], ["Подтягивайся на перекладине", "Do pull-ups on the bar"], ["Этап 2: отпускай на взлёте!", "Stage 2: let go on the way up!"], ["Прокачать мышцы до уровня ", "Upgrade muscles to level "], ["упал, высота не засчитана", "fell, height not counted"], ["Штраф −20 000 монет.", "Fine: −20,000 coins."], ["С возвращением на Землю!", "Welcome back to Earth!"], ["Этап 3: приземлись ровно", "Stage 3: land straight"], ["Уже есть. Вместо него +", "Already owned. Instead +"], ["СУПЕР-ПАДЕНИЕ! Держись!", "SUPER FALL! Hold on!"], ["Мышцы выросли! Уровень ", "Muscles grew! Level "], ["Выдели код и скопируй.", "Select the code and copy it."], ["БАМ! Копилка −половина", "BAM! Stash −half"], ["Твой множитель монет ×", "Your coin multiplier ×"], ["Турник вернётся через ", "Bar returns in "], ["Беги как можно быстрее", "Run as fast as you can"], ["Плюх! Копилка сгорела", "Splat! Stash lost"], ["Сумка сюрприз: турник", "Surprise bag: bar"], ["Сумка сюрприз: одежда", "Surprise bag: outfit"], ["Сохранение загружено", "Save loaded"], ["ПЕРЕХВАТ! +60 монет", "BAR CATCH! +60 coins"], ["ОБРАТНО НАВЕРХ!", "BACK UP!"], ["ВЫРВАЛСЯ С СОЛНЦА!", "ESCAPED THE SUN!"], ["С Солнца не уйти: нужен заряд спортзала 500", "You can’t leave the Sun: you need a gym charge of 500"], ["Вернуться на Землю (заряд 500)", "Back to Earth (charge 500)"], ["На Землю: нужен заряд 500 (", "To Earth: need charge 500 ("], ["Корона", "Corona"], ["Протуберанцы", "Prominences"], ["Меркурий", "Mercury"], ["🔥 ЖАРА! Через 10 секунд тебя унесёт на Землю!", "🔥 HEAT! In 10 seconds you’ll be thrown back to Earth!"], ["Солнце перегрело тебя!", "The Sun overheated you!"], ["Телепорт заблокирован на 5 минут", "Teleport blocked for 5 minutes"], ["☀️ Жара: ", "☀️ Heat: "], ["Лицеист", "Lyceum Student"], ["Телепорт между мирами раз в 45 секунд (T). Только так можно попасть на Солнце", "Teleport between worlds every 45 minutes (T). The only way to reach the Sun"], ["Телепорт между мирами", "Teleport between worlds"], ["Нажми на планету, куда хочешь попасть.", "Tap the planet you want to go to."], ["Нажми ещё раз, чтобы подтвердить", "Tap again to confirm"], ["На Юпитер телепортироваться нельзя", "You can’t teleport to Jupiter"], ["Ты уже здесь", "You’re already here"], ["🌀 Телепорт через ", "🌀 Teleport in "], ["🌀 Телепорт", "🌀 Teleport"], ["ТЕЛЕПОРТ!", "TELEPORT!"], ["Добро пожаловать: ", "Welcome: "], ["Летим на Солнце!", "Flying to the Sun!"], ["ЛЕТИМ ВОКРУГ СОЛНЦА!", "FLYING AROUND THE SUN!"], ["Круг вокруг Солнца ", "Lap around the Sun "], ["Облетел Солнце ×", "Circled the Sun ×"], ["Облёт Солнца: ", "Sun orbit: "], [" из ", " of "], ["☀️ Солнце", "☀️ Sun"], ["🌍 Земля", "🌍 Earth"], ["🌙 Луна", "🌙 Moon"], ["🔴 Марс", "🔴 Mars"], ["🪐 Юпитер", "🪐 Jupiter"], ["Калькулятор разбана", "Unban calculator"], ["Только в версии игры в Claude. Впиши ID с экрана бана.", "Only in the Claude version. Enter the ID from the ban screen."], ["Посчитать код (Claude)", "Calculate code (Claude)"], ["Скопировать код", "Copy code"], ["Скопировано ✓", "Copied ✓"], ["Код выделен, скопируй", "Code selected, copy it"], ["Время: сервер ✓ (разница ", "Time: server ✓ (diff "], [" мин)", " min)"], ["Время: с телефона", "Time: from phone"], ["Время: нет связи с сервером", "Time: no server connection"], ["Время: проверяем…", "Time: checking…"], ["Ускорение игры!", "Game speed hack!"], ["Этот код старее твоего прогресса на этом устройстве. Загрузить можно только более новый код.", "This code is older than your progress on this device. Only a newer code can be loaded."], ["Ты забанен. Играть нельзя, пока тебя не разбанит создатель игры.", "You are banned. You can’t play until the game’s creator unbans you."], ["Код разбана", "Unban code"], ["Вставь код разбана", "Paste the unban code"], ["Проверяем…", "Checking…"], ["Ошибка подписи", "Signing error"], ["Разбанить", "Unban"], ["Неверный код", "Wrong code"], ["Сохранение взломано!", "Save was hacked!"], ["Ты забанен", "You are banned"], ["БАН", "SKY_DIM"], ["Подмена цифр!", "Fake numbers!"], ["Взлом игры!", "Game hacking!"], ["Слишком много монет!", "Too many coins!"], ["Перевод даты!", "Clock cheating!"], ["Проверяем время…", "Checking the time…"], ["Нужен интернет", "Internet needed"], ["Секунду…", "One second…"], ["Чтобы забрать награду, подключись к интернету и открой окно снова.", "To claim the reward, connect to the internet and open this window again."], ["Подожди", "Wait"], ["Тянись! 💪", "Reach! 💪"], ["Тянись к турнику!", "Reach for the bar!"], ["СУПЕРСКОРОСТЬ!", "SUPER SPEED!"], ["ТУРНИК", "TURNIK"], ["Летим на Землю!", "Flying to Earth!"], ["Летим на Луну!", "Flying to the Moon!"], ["Летим на Марс!", "Flying to Mars!"], ["ЮПИТЕР!", "JUPITER!"], ["БУМ! Отскок!", "BOOM! Bounce!"], ["Ты на орбите Солнца!", "You’re orbiting the Sun!"], ["Юпитер отбросил тебя обратно!", "Jupiter threw you back!"], ["Слишком жарко!", "Too hot!"], ["Солнце отправило тебя на Землю", "The Sun sent you back to Earth"], ["ПРИЗЕМЛИЛСЯ НА ЗЕМЛЮ!", "LANDED ON EARTH!"], ["ПРИЗЕМЛИЛСЯ НА ЛУНУ!", "LANDED ON THE MOON!"], ["ПРИЗЕМЛИЛСЯ НА МАРС!", "LANDED ON MARS!"], [" монет за космос", " coins for the space trip"], ["Летим к Солнцу… ", "Flying to the Sun… "], ["Ты как карликовая планета!", "You’re like a dwarf planet!"], ["Раскрутись и отпусти в нужный момент", "Spin up and let go at the right moment"], ["Открытый космос…", "Open space…"], ["Турник притягивает обратно!", "The bar pulls you back!"], ["Земля", "Earth"], ["Солнце", "Sun"], ["Ежедневные награды", "Daily rewards"], ["150 монет", "150 coins"], ["500 кругов", "500 laps"], ["300 монет + заряд", "300 coins + charge"], ["300 монет и полный заряд спортзала: следующий взлёт до самого верха", "300 coins and a full gym charge: your next launch goes to the very top"], ["Сумка одежды", "Outfit bag"], ["Бесплатная сумка сюрприз с одеждой", "Free surprise outfit bag"], ["800 монет", "800 coins"], ["Сумка турника", "Bar bag"], ["Бесплатная сумка сюрприз с турником", "Free surprise bar bag"], ["Сундук чемпиона", "Champion chest"], ["2000 монет и скин: эпический, легендарный или даже хроматический!", "2000 coins and a skin: epic, legendary or even chromatic!"], ["День ", "Day "], ["Сегодня: ", "Today: "], ["Завтра: ", "Tomorrow: "], ["Заходи каждый день. Пропустишь день, и серия начнётся с первого дня.", "Come back every day. Miss a day and the streak restarts from day 1."], ["Сегодняшняя награда уже получена. Приходи завтра!", "Today’s reward is claimed. Come back tomorrow!"], ["Приходи завтра", "Come back tomorrow"], ["Забрать", "Claim"], ["За высоту +", "Height bonus +"], ["Разбанено! Прогресс восстановлен, штраф −50 000 монет.", "Unbanned! Progress restored, fine: −50,000 coins."], ["Бан снят. Старые коды снова работают.", "Ban lifted. Old codes work again."], ["Левитация: зависаешь в воздухе (Q)", "Levitation: hover in the air (Q)"], ["Жабий прыжок: взлёт в 1,5 раза выше", "Frog jump: launch 1.5× higher"], ["ЖАБИЙ ПРЫЖОК ×1,5!", "FROG JUMP ×1.5!"], ["Жаба", "Frog"], ["ПРОБИЛ МАРС!", "SMASHED THROUGH MARS!"], ["ПРОБИЛ ЛУНУ!", "SMASHED THROUGH THE MOON!"], ["Этот код заблокирован: он сделан до того, как тебя поймали.", "This code is blocked: it was made before you got caught."], ["ТЫ НА МАРСЕ!", "YOU’RE ON MARS!"], ["+100 монет за полёт", "+100 coins for the flight"], ["Над Марсом", "Above Mars"], ["Фобос", "Phobos"], ["Юпитер", "Jupiter"], ["Сохранение повреждено, прогресс сброшен", "Save is corrupted, progress reset"], [". Повтор = 30% цены.", ". Duplicate = 30% of price."], [", сорвался с турника", ", slipped off the bar"], ["приземлился ровно (+", "landed straight (+"], ["Человечек на турнике", "Bar Guy"], ["Турник возвращается", "The bar is returning"], ["Жми штангу от груди", "Press the barbell"], ["Этап 1: крути круги", "Stage 1: spin laps"], ["Ранг понизился до «", "Rank dropped to «"], ["Прогресс загружен!", "Progress loaded!"], ["Загрузить прогресс", "Load progress"], ["Вернуться на Землю", "Back to Earth"], ["+50 монет за полёт", "+50 coins for the flight"], ["СИЛА ИЗ СПОРТЗАЛА!", "GYM POWER!"], ["2 круга = 1 монета", "2 laps = 1 coin"], ["Поменьше человечек", "Smaller guy"], ["Перенос прогресса", "Transfer progress"], ["Жми, чтобы начать", "Tap to start"], ["Серия идеальных ×", "Perfect streak ×"], ["Супер-бодибилдер!", "Super bodybuilder!"], ["ТУРНИК ВЗЛЕТАЕТ!", "THE BAR TAKES OFF!"], ["Хватит на круг!", "Enough for a loop!"], ["Только из сумки", "Bag only"], ["ПОЛ ПРОВАЛИЛСЯ!", "THE FLOOR CAVED IN!"], ["РАЗБИЛ! +1 круг", "SMASHED! +1 lap"], ["Спортзал закрыт", "Gym is locked"], ["Трюк «Супермен»", "Trick “Superman”"], ["Беговая дорожка", "Treadmill"], ["Другой соперник", "Another opponent"], ["СУПЕР-ПАДЕНИЕ!", "SUPER FALL!"], [" (высший ранг)", " (top rank)"], ["Сила из зала: ", "Gym power: "], ["Турник и полёт", "Bar & flight"], ["Дальний космос", "Deep space"], ["Серия прервана", "Streak broken"], ["Идеальный круг", "Perfect loop"], ["Мягкая посадка", "Soft landing"], ["Приземлиться!", "Land!"], ["Хроматический", "Chromatic"], ["Сверхредкий", "Super rare"], ["Стартовый", "Starter"], ["Пляжник", "Beachgoer"], ["Пират", "Pirate"], ["Рокер", "Rocker"], ["Диджей", "DJ"], ["Ковбой", "Cowboy"], ["Робот", "Robot"], ["Викинг", "Viking"], ["Огненный", "Fiery"], ["Футболист", "Footballer"], ["Лыжник", "Skier"], ["Повар", "Chef"], ["Рыбак", "Fisher"], ["Трюк «Шпагат»", "Trick “Splits”"], ["Сначала смени", "Swap first"], ["ОТПУСТИ ТРЮК!", "RELEASE TRICK!"], ["Летим наверх!", "Flying up!"], ["Получить код", "Get code"], ["Замечен бот!", "Bot detected!"], ["Обмен кругов", "Trade laps"], ["Подтягивание", "Pull-ups"], ["Новый ранг: ", "New rank: "], [", поражений ", ", losses "], ["РОВНО! ДЕРЖИ", "STRAIGHT! HOLD"], [" к множителю", " to multiplier"], ["Круги тут ×", "Laps here ×"], [" золота и +", " gold and +"], [" за алмазы.", " for diamonds."], [" до ранга «", " to rank «"], ["Открыть за ", "Unlock for "], ["Не хватает ", "Need "], ["Легендарный", "Legendary"], ["Твой ранг: ", "Your rank: "], ["Назад в зал", "Back to gym"], ["Приготовься", "Get ready"], ["Раскачаться", "Swing"], ["ВЫРОВНЯЙСЯ!", "STRAIGHTEN UP!"], ["ТЫ НА ЛУНЕ!", "YOU’RE ON THE MOON!"], ["БОДИБИЛДЕР!", "BODYBUILDER!"], [" ЗА АЛМАЗЫ!", " FOR DIAMONDS!"], ["Идеально! x", "Perfect! x"], ["+100 кругов", "+100 laps"], ["Ввести код", "Enter code"], ["Соперник: ", "Opponent: "], ["Отпустить!", "Let go!"], ["Запрыгнуть", "Jump on"], ["ЛЕВИТАЦИЯ!", "LEVITATION!"], ["Открыть · ", "Open · "], ["Продать · ", "Sell · "], ["без бонуса", "no bonus"], ["ПОЛЕТЕЛИ! ", "LIFTOFF! "], ["Пробиваем!", "Smashing!"], ["Взлёт до: ", "Launch to: "], [": максимум", ": max"], ["Супергерой", "Superhero"], ["Деревянный", "Wooden"], ["Эпический", "Epic"], ["К турнику", "To the bar"], ["ОТПУСКАЙ!", "LET GO!"], ["Отпустить", "Let go"], ["Левитация", "Levitation"], ["Купить · ", "Buy · "], [" за скины", " from skins"], ["Бонус +20", "Bonus +20"], ["Сорвался!", "Slipped!"], ["Полетели!", "Liftoff!"], ["Идеально!", "Perfect!"], ["Слабовато", "Weak"], ["Кто выше?", "Who’s higher?"], ["В секунду", "Per second"], ["Все круги", "All laps"], ["10 кругов", "10 laps"], ["Поражение", "Defeat"], ["Поставить", "Equip"], ["Над Луной", "Above the Moon"], ["Спортсмен", "Athlete"], ["Тюбетейка", "Skullcap"], ["Космонавт", "Cosmonaut"], [" кругов (", " laps ("], [" рейтинга", " rating"], ["Жим лёжа", "Bench press"], ["Рейтинг ", "Rating "], [". Побед ", ". Wins "], [" ЗОЛОТА!", " GOLD!"], ["Уровень ", "Level "], ["Выпало: ", "You got: "], ["монеты ×", "coins ×"], ["Монеты ×", "Coins ×"], ["Сорвался", "Slipped"], ["Полетел!", "Flying!"], [" нажатий", " taps"], ["Максимум", "Max"], ["Спортзал", "Gym"], ["Прокачка", "Upgrades"], ["Персонаж", "Character"], ["Копилка ", "Stash "], ["Супермен", "Superman"], ["Классика", "Classic"], ["Крылатый", "Winged"], ["Стальной", "Steel"], ["Обычный", "Common"], ["Ещё раз", "Again"], ["Ещё бой", "Another fight"], ["Заряд: ", "Charge: "], ["Мышцы: ", "Muscles: "], ["Нажатий", "Taps"], ["Победа!", "Victory!"], ["Летишь!", "Flying!"], ["Встаём…", "Getting up…"], ["Поймал!", "Caught it!"], ["Прыжок!", "Jump!"], ["Золото!", "Gold!"], ["Куплено", "Bought"], ["Понятно", "Got it"], ["КАЧАЛКА", "GYM"], ["Закрыть", "Close"], ["Сальто ", "Flip "], ["Высота ", "Height "], ["↑ ВЗЛЁТ", "↑ LAUNCH"], ["Магазин", "Shop"], ["Турники", "Bars"], ["КРУГ! x", "LAP! x"], ["У тебя ", "You have "], ["Новичок", "Rookie"], ["Серебро", "Silver"], ["Платина", "Platinum"], ["Легенда", "Legend"], ["Золотой", "Golden"], ["Леденец", "Candy"], [" кругов", " laps"], [" монет.", " coins."], ["Редкий", "Rare"], ["Сила: ", "Power: "], ["СИЛАЧ!", "STRONGMAN!"], ["МЫШЦЫ!", "MUSCLES!"], ["Хорошо", "Good"], ["Секунд", "Seconds"], ["Летим…", "Flying…"], ["Открыт", "Unlocked"], ["Надеть", "Wear"], ["Надето", "Worn"], ["МЫШЦЫ ", "MUSCLES "], ["Одежда", "Outfits"], ["В бой!", "Fight!"], ["СТАРТ!", "GO!"], ["Размах", "Swing"], ["Монеты", "Coins"], ["Вправо", "Right"], ["Звезда", "Star"], ["Шпагат", "Splits"], ["Чисто!", "Clean!"], ["ВЫШЕ! ", "HIGHER! "], ["Облака", "Clouds"], ["Космос", "Space"], ["Бронза", "Bronze"], ["Золото", "Gold"], ["Ниндзя", "Ninja"], ["Радуга", "Rainbow"], ["Руслан", "Ruslan"], ["Камила", "Kamila"], ["Динара", "Dinara"], ["Ильдар", "Ildar"], ["Сабина", "Sabina"], ["Айгуль", "Aigul"], ["Рамиль", "Ramil"], ["Зарина", "Zarina"], [" круга", " laps"], [" монет", " coins"], ["Парю ", "Floating "], ["Мимо!", "Miss!"], ["Ничья", "Draw"], ["Стоит", "Equipped"], ["Битва", "Battle"], ["Трюки", "Tricks"], ["КРУГ!", "LAP!"], ["Выйти", "Exit"], ["Готов", "Ready"], ["Круги", "Laps"], ["Влево", "Left"], ["Плюх!", "Splat!"], ["Аааа!", "Aaaah!"], ["Алмаз", "Diamond"], ["Таран", "Ram"], ["Тимур", "Timur"], ["Артур", "Artur"], ["Марат", "Marat"], ["Лейла", "Leyla"], ["Булат", "Bulat"], [" круг", " lap"], [" мон.", " c."], ["БАМ!", "BAM!"], ["Хоп!", "Hop!"], ["Упал", "Fell"], ["ЖМИ!", "TAP!"], ["Жми!", "Tap!"], ["Раз!", "One!"], ["Два!", "Two!"], ["Три!", "Three!"], ["Двор", "Yard"], ["Луна", "Moon"], ["Марс", "Mars"], ["Неон", "Neon"], ["Алия", "Aliya"], ["Амир", "Amir"], ["Ты ", "You "], ["Ты", "You"]],TRC=new Map(),CYR=/[А-Яа-яЁё]/;
 I18N.sort(function(x,y){return y[0].length-x[0].length;});
 function tr(s){if(LANG!=='en'||typeof s!=='string'||!CYR.test(s))return s;
 var r=TRC.get(s);if(r!==undefined)return r;r=s;
@@ -509,6 +565,7 @@ var SKINS=[
 {rar:'legend',id:'fire',name:'Огненный',price:2200,shirt:'#b3201f',shorts:'#2b2b38',shoe:'#ff8a1f',hat:'flame'},
 {rar:'chroma',id:'wing',name:'Крылатый',price:4000,shirt:'#f6f8ff',shorts:'#26315c',shoe:'#f6f8ff',hat:'swoop',wings:true,tie:'#8a3bd1',knee:true,ab:'Левитация: зависаешь в воздухе (Q)'},
 {rar:'chroma',id:'frog',name:'Жаба',price:4000,shirt:'#5fb83e',shorts:'#4ea332',shoe:'#5fb83e',frog:true,skinCol:'#5fb83e',ab:'Жабий прыжок: взлёт в 1,5 раза выше'},
+{rar:'event',id:'pumpkin',name:'Тыква',price:30000,shirt:'#2b2b38',shorts:'#ff7a1a',shoe:'#2b2b38',cape:'#5b2a86',pumpkin:true,ab:'Тыквенная ярость: кнопка 🎃 даёт +10 000 монет раз в 3 минуты (P). А ещё взлёт ×3, всегда на ноги, копилка ×2, препятствия разбиваешь (+100 монет и +3 круга)'},
 {rar:'chroma',id:'lyc',name:'Лицеист',price:4000,shirt:'#1f3f8f',shorts:'#1a2f6b',shoe:'#1b1530',lyc:true,pants:true,sleeve:true,ab:'Телепорт между мирами раз в 45 секунд (T). Только так можно попасть на Солнце'}
 ];
 var UPS=[
@@ -541,7 +598,43 @@ var TRICKS=[
 {id:'split',name:'Шпагат',icon:'↔',val:6,key:'KeyR'}
 ];
 var $=function(id){return document.getElementById(id);};
-var cv=$('c'),ctx=cv.getContext('2d');
+var cv=$('c'),ctx=cv.getContext('2d',{willReadFrequently:true});
+var PIX=true;try{PIX=localStorage.getItem('turnik-gfx')!=='hd';}catch(e){}
+document.documentElement.classList.toggle('px',PIX);
+var PXM=2.5,PXD=PIX?1/2.2:Math.min(window.devicePixelRatio||1,2);
+var PAL='181425262b443a44665a69888b9bb4c0cbdcffffff3e2731733e39a22633e43b44be4a2fd77643f77622feae34fee761ead4aae4a672b86f50c2856963c74d3e8948265c42193c3e124e890099db2ce8f568386cb55088f6757ae8b796ff00445fb4f08fd3ff4a8fe02b5fae3c2a635a3d8c1b2b4f0f1730b9f03cffd23fff7a1affd0a0e8a0707fd85a9fe0ffc59bff'.replace(/ /g,'');
+var LUT=null,BAY=[0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];
+function pixLUT(){
+var pc=[];for(var i=0;i+6<=PAL.length;i+=6)pc.push([parseInt(PAL.substr(i,2),16),parseInt(PAL.substr(i+2,2),16),parseInt(PAL.substr(i+4,2),16)]);
+LUT=new Uint32Array(32768);
+for(var c=0;c<32768;c++){var r=((c>>10)&31)*8.226,g=((c>>5)&31)*8.226,b=(c&31)*8.226,bi=0,bd=1e9;
+for(var j=0;j<pc.length;j++){var p=pc[j],dr=r-p[0],dg=g-p[1],db=b-p[2],rm=(r+p[0])/2,d=(2+rm/256)*dr*dr+4*dg*dg+(2+(255-rm)/256)*db*db;if(d<bd){bd=d;bi=j;}}
+var q=pc[bi];LUT[c]=(255<<24)|(q[2]<<16)|(q[1]<<8)|q[0];}
+}
+function pixQ(c){
+if(!PIX)return;if(!LUT)pixLUT();
+var w=c.canvas.width,h=c.canvas.height;if(!w||!h)return;
+var id;try{id=c.getImageData(0,0,w,h);}catch(e){return;}
+var d=new Uint32Array(id.data.buffer),i=0;
+for(var y=0;y<h;y++){var by=(y&3)*4;for(var x=0;x<w;x++,i++){var v=d[i],a=v>>>24;if(a<110){d[i]=0;continue;}
+var t=(BAY[by+(x&3)]-7.5)*1.3,r=(v&255)+t,g=((v>>8)&255)+t,b=((v>>16)&255)+t;
+r=r<0?0:r>255?255:r;g=g<0?0:g>255?255:g;b=b<0?0:b>255?255:b;
+d[i]=LUT[((r>>3)<<10)|((g>>3)<<5)|(b>>3)];}}
+c.setTransform(1,0,0,1,0,0);c.putImageData(id,0,0);
+}
+function setGfx(on){PIX=!!on;try{localStorage.setItem('turnik-gfx',PIX?'px':'hd');}catch(e){}
+document.documentElement.classList.toggle('px',PIX);PXD=PIX?1/2.2:Math.min(window.devicePixelRatio||1,2);
+fit();FRAME_OK=false;if(!shopEl.hidden)renderShop();}
+var tcv=$('ct'),tctx=tcv.getContext('2d');
+(function(){if(!ctx.getTransform)return;
+function sync(c){var m=c.getTransform(),k=tcv.width/(cv.width||1);
+tctx.setTransform(m.a*k,m.b*k,m.c*k,m.d*k,m.e*k,m.f*k);
+tctx.font=c.font;tctx.textAlign=c.textAlign;tctx.textBaseline=c.textBaseline;tctx.direction=c.direction;
+tctx.fillStyle=c.fillStyle;tctx.strokeStyle=c.strokeStyle;tctx.lineWidth=c.lineWidth;tctx.lineJoin=c.lineJoin;tctx.miterLimit=c.miterLimit;
+tctx.globalAlpha=c.globalAlpha;tctx.shadowColor=c.shadowColor;tctx.shadowBlur=c.shadowBlur*k;tctx.shadowOffsetX=c.shadowOffsetX*k;tctx.shadowOffsetY=c.shadowOffsetY*k;}
+ctx.fillText=function(){sync(this);return tctx.fillText.apply(tctx,arguments);};
+ctx.strokeText=function(){sync(this);return tctx.strokeText.apply(tctx,arguments);};
+})();
 var elScore=$('score'),elBest=$('best'),elFill=$('fill'),elMeter=$('meter'),elMk=$('mk'),elStatus=$('status');
 var bigBtn=$('big'),dropBtn=$('drop'),lrBox=$('lr'),leftBtn=$('left'),rightBtn=$('right'),tricksBox=$('tricks');
 var shopEl=$('shop'),listEl=$('list'),walletEl=$('wallet'),bottomEl=$('bottom'),hudEl=$('hudbar');
@@ -579,7 +672,7 @@ if(!fitsRange(o)){if(o)DUSTY=true;return false;}
 P.coins=Math.max(0,Math.floor(+o.coins||0));P.circles=Math.max(0,Math.ceil(+o.circles||0));P.best=+o.best||0;
 P.skin=o.skin||'classic';P.owned=o.owned||{classic:1};P.owned.classic=1;P.up=o.up||{};
 P.charge=+o.charge||0;P.gym=!!o.gym;P.mus=+o.mus||0;P.musLv=+o.musLv||0;P.musPts=o.musPts!=null?+o.musPts:(+o.mus||0);P.bar=o.bar||'steel';P.ownedBar=o.ownedBar||{steel:1};P.ownedBar.steel=1;
-P.rp=+o.rp||0;P.wins=+o.wins||0;P.losses=+o.losses||0;P.loc=(o.loc==='moon'||o.loc==='mars'||o.loc==='sun')?o.loc:'earth';P.tele=+o.tele||0;P.sunAt=+o.sunAt||0;
+P.rp=+o.rp||0;P.wins=+o.wins||0;P.losses=+o.losses||0;P.loc=(o.loc==='moon'||o.loc==='mars'||o.loc==='sun')?o.loc:'earth';P.tele=+o.tele||0;P.pmk=+o.pmk||0;P.sunAt=+o.sunAt||0;
 P.ver=+o.ver||0;P.ts=+o.ts||0;P.gs=o.gs||{};P.ban=+o.ban||0;P.ubp=(Array.isArray(o.ubp)&&o.ubp.length===2)?[String(o.ubp[0]).slice(0,12),String(o.ubp[1]).slice(0,100)]:null;P.seen=+o.seen||0;P.banSrv=+o.banSrv||0;P.tut=+o.tut||0;if(/^[a-z0-9]{16}$/.test(o.pid||'')&&/^[a-z0-9]{24}$/.test(o.tok||'')){P.pid=o.pid;P.tok=o.tok;}P.seedFx=String(o.seedFx||'').slice(0,12);P.daily=(o.daily&&typeof o.daily==='object')?{d:Math.max(0,Math.min(7,+o.daily.d||0)),last:String(o.daily.last||'').slice(0,10)}:{d:0,last:''};
 if(!P.owned[P.skin])P.skin='classic';if(!P.ownedBar[P.bar])P.bar='steel';
 if(typeof CAP!=='undefined'){if((+o.coins||0)>=CAP.coins||(+o.circles||0)>=CAP.circles)FX_OVER=true;clampCfg();}
@@ -599,7 +692,7 @@ applySave(best);
 function rndId(n){var a='abcdefghijklmnopqrstuvwxyz0123456789',u=new Uint8Array(n),s='';try{crypto.getRandomValues(u);}catch(e){for(var i=0;i<n;i++)u[i]=Math.floor(Math.random()*256);}for(var j=0;j<n;j++)s+=a[u[j]%36];return s;}
 var FB={key:'AIzaSyCP6EnBpnI07-IMY7_XaULYUVng9NTwyLk',uid:'',rt:'',tok:'',exp:0,bid:'',lock:false,fast:0,busy:false};
 var FBD='https://firestore.googleapis.com/v1/projects/turnik-d7951/databases/(default)/documents';
-var FCFG={first:60000,rate:30000,bucket:90000,grace:10000};
+var FCFG={first:60000,rate:30000,prate:230000,bucket:90000,grace:10000};
 (function(){try{var o=JSON.parse(localStorage.getItem('turnik-fb')||'null');if(o){FB.uid=o.uid||'';FB.rt=o.rt||'';FB.bid=o.bid||'';}}catch(e){}})();
 function fbStore(){try{localStorage.setItem('turnik-fb',JSON.stringify({uid:FB.uid,rt:FB.rt,bid:FB.bid}));}catch(e){}}
 function fbBid(){if(!/^\d{8}$/.test(FB.bid)){FB.bid=String(Math.floor(10000000+Math.random()*90000000));fbStore();}return FB.bid;}
@@ -689,9 +782,9 @@ if(doc.gift!=null){snap=JSON.stringify(P);gd=fbGiftApply(doc.gift);sv=fbS();w=fb
 var undo=function(){if(snap){var o=JSON.parse(snap);for(var k in o)P[k]=o[k];}};
 return Promise.resolve().then(function(){
 if(!srv)throw new Error('time');
-var hrs=Math.max(0,(srv-(+doc.t||0)-5000)/3600e3),x=(+doc.cr||0)+FCFG.rate*hrs,credit=Math.min(FCFG.bucket,x);
+var hrs=Math.max(0,(srv-(+doc.t||0)-5000)/3600e3),rt=(doc.s&&doc.s.owned&&+doc.s.owned.pumpkin===1)?FCFG.prate:FCFG.rate,x=(+doc.cr||0)+rt*hrs,credit=Math.min(FCFG.bucket,x);
 var need=w-(+doc.w||0)-gift;
-if(need>credit+FCFG.grace){undo();var lack=need-FCFG.grace-credit;FB.fast=lack>FCFG.bucket-credit?-1:Math.ceil(lack/FCFG.rate*60);return fin('fast');}
+if(need>credit+FCFG.grace){undo();var lack=need-FCFG.grace-credit;FB.fast=lack>FCFG.bucket-credit?-1:Math.ceil(lack/rt*60);return fin('fast');}
 FB.fast=0;
 var cr=Math.max(-FCFG.grace,credit-Math.max(0,need)-500);
 return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:w,cr:cr+0.5,bid:FB.bid})},updateMask:{fieldPaths:['s','w','cr','bid','gift']},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:true}}])
@@ -913,6 +1006,7 @@ popup(CX,160,'СИЛА ИЗ СПОРТЗАЛА!','#b9f03c',20,1.6);
 P.charge=0;save();
 }
 if(CUR.frog){S.vy*=Math.sqrt(1.5);popup(CX,200,'ЖАБИЙ ПРЫЖОК ×1,5!','#7fe85a',20,1.4);}
+if(CUR.pumpkin){S.vy*=Math.sqrt(3);popup(CX,200,'ТЫКВЕННАЯ ЯРОСТЬ ×3!','#ff8a1f',20,1.4);}
 S.vx=clamp(vx*0.25,-160,160);
 if(!S.reL)S.launchV=-S.vy;
 S.launched=true;
@@ -938,7 +1032,10 @@ a-=750+Math.random()*550;
 }
 function hitObs(o,i){
 S.obs.splice(i,1);
-if(lvl('ram')){
+if(CUR&&CUR.pumpkin){
+S.pend+=100;S.pendC+=3;
+popup(CX,S.cy+S.cam+130,'ТЫКВА! +100 монет +3 круга','#ff8a1f',22,1.1);
+}else if(lvl('ram')){
 S.pendC+=1;
 popup(CX,S.cy+S.cam+130,'РАЗБИЛ! +1 круг','#b9f03c',22,1.1);
 }else{
@@ -998,6 +1095,7 @@ function heightBonus(alt){var f=clamp(alt/(20000*DS()),0,1);if(f<0.05)return 0;r
 function land(){
 var vy=S.vy,a=wrap(S.th),trick=S.trick;
 S.sx=clamp(S.cx,40,W-40);S.om=0;S.wf=0;S.trick=null;S.obs=[];
+if(CUR&&CUR.pumpkin&&(Math.abs(a)>=SAFE||trick)){a=0;trick=null;popup(CX,G-296,'ТЫКВЕННАЯ ПОСАДКА!','#ff8a1f',18,1.6);}
 if(Math.abs(a)<SAFE&&!trick){
 S.th=0;
 setMode('stand');
@@ -1006,6 +1104,7 @@ dust(S.sx,G,10,true);
 if(S.launched&&S.maxAlt>=900){S.pend+=20;popup(CX,G-232,'Бонус +20','#b9f03c',18,1.4);}
 var cm=coinMult();
 if(cm>1&&S.pend>=1){S.pend=Math.floor(S.pend*cm);popup(CX,G-136,'Монеты ×'+fmt(cm)+' за скины','#ffd23f',15,1.8);}
+if(CUR&&CUR.pumpkin&&S.pend>=1){S.pend+=Math.min(Math.floor(S.pend),20000);popup(CX,G-104,'Тыква: копилка ×2','#ff8a1f',15,1.8);}
 var hbv=S.launched?heightBonus(S.maxAlt):0;if(hbv>0){S.pend+=hbv;popup(CX,G-264,'За высоту +'+hbv,'#7fe8ff',20,1.8);}
 var hl=haul();
 if(hl){
@@ -1412,6 +1511,19 @@ var b=document.getElementById('teleBtn');if(!b)return;
 var vis=!!(CUR&&CUR.lyc)&&(S.mode==='stand'||S.mode==='hang')&&!S.fly&&!SKY_DIM;b.hidden=!vis;if(!vis)return;
 var l=teleLeft();if(l>0){var s2=Math.ceil(l/1000);b.textContent='🌀 Телепорт через '+Math.floor(s2/60)+':'+('0'+s2%60).slice(-2);b.disabled=true;}else{b.textContent='🌀 Телепорт';b.disabled=false;}}
 var TELE={open:false,ot:0,last:0};
+var PUMP_CD=180e3,PUMP_GIFT=10000;
+function pumpLeft(){var l=(P.pmk||0)-nowT();if(l>PUMP_CD+2000){P.pmk=0;l=0;}return Math.max(0,l);}
+function pumpShow(){
+var b=document.getElementById('pumpBtn');if(!b)return;
+var vis=!!(CUR&&CUR.pumpkin)&&(S.mode==='stand'||S.mode==='hang')&&!S.fly&&!SKY_DIM;b.hidden=!vis;if(!vis)return;
+var l=pumpLeft();if(l>0){var s2=Math.ceil(l/1000);b.textContent='🎃 через '+Math.floor(s2/60)+':'+('0'+s2%60).slice(-2);b.disabled=true;}else{b.textContent='🎃 +10 000';b.disabled=false;}}
+function pumpUse(){
+if(!(CUR&&CUR.pumpkin)||SKY_DIM||pumpLeft()>0||!(S.mode==='stand'||S.mode==='hang')||S.fly)return;
+var add=Math.max(0,Math.min(PUMP_GIFT,CAP.coins-1-Math.floor(P.coins)));
+if(add<=0){popup(CX,150,'Кошелёк полон!','#ff8a8a',18,1.6);return;}
+P.pmk=nowT()+PUMP_CD;bank(0,add);
+popup(CX,150,'🎃 ТЫКВЕННЫЙ КЛАД +'+fmt(add)+'!','#ff8a1f',22,2);confetti(CX,200,40,true);pumpShow();
+}
 function telePos(k,tt){
 var cv2=$('telecv'),w=cv2.width,h=cv2.height,cx=w/2,cy=h/2,s=w/400;
 var O={earth:[70,20,0.5],mars:[105,32,2.9],jupiter:[150,60,4.4]};
@@ -1422,7 +1534,7 @@ var o=O[k],a2=-tt*TAU/o[1]+o[2];return [cx+Math.cos(a2)*o[0]*s,cy+Math.sin(a2)*o
 function teleDraw(){
 if(!TELE.open)return;
 var now=performance.now();if(!TELE.sel)TELE.ot+=(now-(TELE.last||now))/1000;TELE.last=now;TELE.pt=(TELE.pt||0)+0.016;
-var cv2=$('telecv'),c=cv2.getContext('2d'),dpr=Math.min(window.devicePixelRatio||1,2),w=Math.round(cv2.clientWidth*dpr),hh=Math.round(cv2.clientHeight*dpr);
+var cv2=$('telecv'),c=cv2.getContext('2d'),dpr=PXD,w=Math.round(cv2.clientWidth*dpr),hh=Math.round(cv2.clientHeight*dpr);
 if(cv2.width!==w||cv2.height!==hh){cv2.width=w;cv2.height=hh;}
 var old=ctx;ctx=c;
 ctx.setTransform(1,0,0,1,0,0);var g=ctx.createRadialGradient(w/2,hh/2,10,w/2,hh/2,w*0.7);g.addColorStop(0,'#1d1440');g.addColorStop(1,'#05040f');ctx.fillStyle=g;ctx.fillRect(0,0,w,hh);
@@ -1901,8 +2013,20 @@ ctx.beginPath();ctx.moveTo(-15,3);ctx.quadraticCurveTo(0,mood==='joy'?14:11,15,3
 if(mood==='joy'){ctx.beginPath();ctx.ellipse(0,9.5,4,3,0,0,Math.PI);ctx.fillStyle='#ff7a8a';ctx.fill();}
 }
 }
+function pumpkinHead(mood,t){
+ctx.lineJoin='round';ctx.lineCap='round';ctx.lineWidth=2.6;ctx.strokeStyle=INK;
+ctx.fillStyle='#4f8a2b';ctx.beginPath();ctx.moveTo(-2,-15);ctx.quadraticCurveTo(-1,-23,5,-25);ctx.lineTo(6,-21);ctx.quadraticCurveTo(2,-20,2,-14);ctx.closePath();ctx.fill();ctx.stroke();
+ctx.fillStyle='#ff7a1a';ctx.beginPath();ctx.ellipse(0,0,19,16,0,0,TAU);ctx.fill();ctx.stroke();
+ctx.strokeStyle='rgba(27,21,48,.45)';ctx.lineWidth=1.6;
+ctx.beginPath();ctx.ellipse(0,0,8,15.5,0,0,TAU);ctx.stroke();ctx.beginPath();ctx.ellipse(0,0,14,16,0,-1.2,1.2);ctx.stroke();ctx.beginPath();ctx.ellipse(0,0,14,16,0,Math.PI-1.2,Math.PI+1.2);ctx.stroke();
+var glow=0.75+0.25*Math.sin(t*9);ctx.fillStyle='rgba(255,'+Math.round(200+40*glow)+',60,1)';ctx.strokeStyle=INK;ctx.lineWidth=1.6;
+ctx.beginPath();ctx.moveTo(-10,-3);ctx.lineTo(-5,-9);ctx.lineTo(-2,-2);ctx.closePath();ctx.fill();ctx.stroke();
+ctx.beginPath();ctx.moveTo(10,-3);ctx.lineTo(5,-9);ctx.lineTo(2,-2);ctx.closePath();ctx.fill();ctx.stroke();
+ctx.beginPath();ctx.moveTo(-11,4);ctx.lineTo(-7,9);ctx.lineTo(-4,6);ctx.lineTo(-1,10);ctx.lineTo(2,6);ctx.lineTo(5,10);ctx.lineTo(8,6);ctx.lineTo(11,4);ctx.quadraticCurveTo(0,8,-11,4);ctx.closePath();ctx.fill();ctx.stroke();
+}
 function head(mood,t){
 if(CUR.frog){frogHead(mood,t);return;}
+if(CUR.pumpkin){pumpkinHead(mood,t);return;}
 var blink=(t%3.4)>3.28;
 ctx.lineJoin='round';ctx.lineCap='round';
 ctx.lineWidth=2.6;ctx.strokeStyle=INK;ctx.fillStyle=SKIN;
@@ -2286,6 +2410,37 @@ ctx.lineWidth=4;ctx.strokeStyle=INK;ctx.strokeText(z.name.toUpperCase()+' '+mult
 ctx.fillStyle=z.col;ctx.fillText(z.name.toUpperCase()+' '+multTxt(z.m*LM()),12,y-6);
 }
 }
+function hwSky(t){
+var my=HUDL+95;
+ctx.fillStyle='rgba(38,12,58,.55)';ctx.fillRect(0,0,W,HS);
+var g=ctx.createRadialGradient(330,my,10,330,my,120);g.addColorStop(0,'rgba(255,150,40,.55)');g.addColorStop(1,'rgba(255,120,30,0)');ctx.fillStyle=g;ctx.fillRect(200,my-120,200,240);
+ctx.beginPath();ctx.arc(330,my,34,0,TAU);ctx.fillStyle='#ffb347';ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=INK;ctx.stroke();
+ctx.fillStyle='rgba(200,110,30,.5)';ctx.beginPath();ctx.arc(320,my-7,7,0,TAU);ctx.fill();ctx.beginPath();ctx.arc(342,my+11,5,0,TAU);ctx.fill();
+for(var i=0;i<5;i++){var x=((t*(28+i*9)+i*97)%(W+80))-40,y=my+60+i*55+Math.sin(t*2+i)*18,f=Math.sin(t*14+i*2);
+ctx.save();ctx.translate(x,y);ctx.fillStyle='#1b1530';ctx.beginPath();ctx.moveTo(0,0);
+ctx.quadraticCurveTo(-8,-8-6*f,-18,-2-8*f);ctx.quadraticCurveTo(-12,0,-9,4);ctx.quadraticCurveTo(-4,1,0,5);
+ctx.quadraticCurveTo(4,1,9,4);ctx.quadraticCurveTo(12,0,18,-2-8*f);ctx.quadraticCurveTo(8,-8-6*f,0,0);ctx.fill();
+ctx.fillStyle='#ffd23f';ctx.fillRect(-2.5,0.5,1.6,1.6);ctx.fillRect(1,0.5,1.6,1.6);ctx.restore();}
+}
+function hwPumpkin(x,y,r,t){
+ctx.save();ctx.translate(x,y);ctx.lineWidth=2.4;ctx.strokeStyle=INK;
+ctx.fillStyle='#4f8a2b';ctx.fillRect(-2,-r-6,4,7);
+ctx.fillStyle='#ff7a1a';ctx.beginPath();ctx.ellipse(0,0,r*1.2,r,0,0,TAU);ctx.fill();ctx.stroke();
+ctx.strokeStyle='rgba(27,21,48,.45)';ctx.lineWidth=1.4;ctx.beginPath();ctx.ellipse(0,0,r*0.5,r,0,0,TAU);ctx.stroke();
+var gl=0.7+0.3*Math.sin(t*7+x);ctx.fillStyle='rgba(255,'+Math.round(190+50*gl)+',60,1)';
+ctx.beginPath();ctx.moveTo(-r*0.6,-r*0.15);ctx.lineTo(-r*0.3,-r*0.5);ctx.lineTo(-r*0.1,-r*0.1);ctx.fill();
+ctx.beginPath();ctx.moveTo(r*0.6,-r*0.15);ctx.lineTo(r*0.3,-r*0.5);ctx.lineTo(r*0.1,-r*0.1);ctx.fill();
+ctx.beginPath();ctx.moveTo(-r*0.65,r*0.2);ctx.lineTo(-r*0.3,r*0.5);ctx.lineTo(0,r*0.3);ctx.lineTo(r*0.3,r*0.5);ctx.lineTo(r*0.65,r*0.2);ctx.quadraticCurveTo(0,r*0.45,-r*0.65,r*0.2);ctx.fill();
+ctx.restore();
+}
+function hwGround(t){
+hwPumpkin(85,G-10,11,t);hwPumpkin(150,G-8,8,t);hwPumpkin(262,G-12,13,t);hwPumpkin(322,G-8,8,t);
+ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=1;
+var py=B;for(var k=0;k<2;k++){var cx=k?360:40,d=k?-1:1;ctx.beginPath();
+for(var a=0;a<4;a++){ctx.moveTo(cx,py);ctx.lineTo(cx+d*26*Math.cos(a*0.42),py+26*Math.sin(a*0.42));}
+for(var rr=8;rr<=24;rr+=8){ctx.moveTo(cx+d*rr,py);for(var a2=1;a2<4;a2++)ctx.lineTo(cx+d*rr*Math.cos(a2*0.42),py+rr*Math.sin(a2*0.42));}
+ctx.stroke();}
+}
 function ground(t){
 if(S.mode==='gold'){mine(t);return;}
 if(P.loc==='moon'){moonGround();return;}
@@ -2543,6 +2698,7 @@ function render(t){
 var sc=cv.width/W,m=S.mode,cam=S.cam,k=K();
 ctx.setTransform(sc,0,0,sc,0,0);
 ctx.clearRect(0,0,W,HS);
+tctx.setTransform(1,0,0,1,0,0);tctx.clearRect(0,0,tcv.width,tcv.height);
 if((m==='space'&&S.sp)||(m==='warp'&&S.wp)||(m==='sorb'&&S.so)){
 if(m==='warp')drawWarp(t);else if(m==='sorb')drawSorb(t);else drawSpace(t);
 for(var si=0;si<pops.length;si++){var pp=pops[si],ff=pp.age/pp.life;ctx.save();ctx.globalAlpha=clamp(1.6*(1-ff),0,1);label(pp.text,pp.x,pp.y-ff*34+OY,pp.size,pp.col,'center');ctx.restore();}
@@ -2550,6 +2706,7 @@ if(S.flash>0){ctx.fillStyle='rgba(255,250,235,'+S.flash+')';ctx.fillRect(0,0,W,H
 return;
 }
 background(t,cam);
+if(HW.on)hwSky(t);
 ctx.translate(0,OY);
 if(m==='intro'&&S.it){drawIntro(t);for(var ii=0;ii<parts.length;ii++){}
 for(var si2=0;si2<pops.length;si2++){var p2=pops[si2],f2=p2.age/p2.life;ctx.save();ctx.globalAlpha=clamp(1.6*(1-f2),0,1);label(p2.text,p2.x,p2.y-f2*34,p2.size,p2.col,'center');ctx.restore();}
@@ -2558,7 +2715,7 @@ var LT=Math.max(28,HUDL+20-OY);ATOP=Math.min(250,Math.max(62,LT+44));
 ctx.save();ctx.translate(0,cam);
 worldDecor(t,cam);
 for(var oi=0;oi<S.obs.length;oi++){var ob=S.obs[oi];if(vis(ob.y+cam,60))drawObs(ob,t);}
-if(cam<HS-OY+60)ground(t);
+if(cam<HS-OY+60){ground(t);if(HW.on)hwGround(t);}
 var bend=Math.sin(t*38)*S.shake*3.5,py=PY();
 var sx,comY;
 if(m==='hang'){sx=CX+R*Math.sin(S.th);comY=py+R*Math.cos(S.th);}
@@ -2706,7 +2863,7 @@ else if(m==='lay')say('lay','Упал, копилка за прыжок сгор
 else say('jump','Хоп!');
 }
 var tab='skins',REVEAL=null;
-var RAR={common:{n:'Обычный',c:'#b8c6e6',w:50,m:1.2,bm:0.1},rare:{n:'Редкий',c:'#4aa8ff',w:26.5,m:1.5,bm:0.2},super:{n:'Сверхредкий',c:'#3fe0c5',w:14,m:1.8,bm:0.25},epic:{n:'Эпический',c:'#c59bff',w:8,m:2,bm:0.3},legend:{n:'Легендарный',c:'#ffd23f',w:1,m:3,bm:0.5},chroma:{n:'Хроматический',c:'#ff6bd6',w:0.5,m:4,bm:0.8}};
+var RAR={event:{n:'Хеллоуин',c:'#ff8a1f',w:0,m:3,bm:0.3},common:{n:'Обычный',c:'#b8c6e6',w:50,m:1.2,bm:0.1},rare:{n:'Редкий',c:'#4aa8ff',w:26.5,m:1.5,bm:0.2},super:{n:'Сверхредкий',c:'#3fe0c5',w:14,m:1.8,bm:0.25},epic:{n:'Эпический',c:'#c59bff',w:8,m:2,bm:0.3},legend:{n:'Легендарный',c:'#ffd23f',w:1,m:3,bm:0.5},chroma:{n:'Хроматический',c:'#ff6bd6',w:0.5,m:4,bm:0.8}};
 function coinMult(){
 var sk=skinById(P.skin),bk=barById(P.bar);
 var m=sk.rar?RAR[sk.rar].m:1;
@@ -2741,7 +2898,7 @@ if(REVEAL&&REVEAL.item===it)REVEAL=null;
 save();hud();renderShop();
 }
 function previewSkin(cnv,sk){
-var dpr=Math.min(window.devicePixelRatio||1,2),w=cnv.clientWidth||130,h=150;
+var dpr=PXD,w=cnv.clientWidth||130,h=150;
 cnv.width=Math.round(w*dpr);cnv.height=Math.round(h*dpr);
 var old=ctx,oldSkin=CUR,oldSq=S.sq,oldUp=P.up.small;
 ctx=cnv.getContext('2d');applySkin(sk);S.sq=0;P.up.small=0;
@@ -2749,7 +2906,7 @@ var s=dpr*0.92;
 ctx.setTransform(s,0,0,s,0,0);
 ctx.translate(w/0.92/2-60,h/0.92-12-G);
 drawStand(60,1.2,G,'smile');
-ctx=old;applySkin(oldSkin);S.sq=oldSq;P.up.small=oldUp;
+pixQ(ctx);ctx=old;applySkin(oldSkin);S.sq=oldSq;P.up.small=oldUp;
 }
 function swap(n){
 n=Math.floor(Math.min(n,P.circles)/2)*2;
@@ -2760,14 +2917,14 @@ save();hud();renderShop();
 $('swap10').addEventListener('click',function(){swap(10);});
 $('swapAll').addEventListener('click',function(){swap(P.circles);});
 function previewBar(cnv,bk){
-var dpr=Math.min(window.devicePixelRatio||1,2),w=cnv.clientWidth||130,h=150;
+var dpr=PXD,w=cnv.clientWidth||130,h=150;
 cnv.width=Math.round(w*dpr);cnv.height=Math.round(h*dpr);
 var old=ctx;ctx=cnv.getContext('2d');BAR_OVERRIDE=bk;
 var s=cnv.width/400;ctx.setTransform(s,0,0,s,0,0);
 var lh=400*h/w;
 ctx.translate(0,(lh-(G-B+40))/2-B+20);
 rig(0,B,false,1);
-BAR_OVERRIDE=null;ctx=old;
+BAR_OVERRIDE=null;pixQ(ctx);ctx=old;
 }
 function renderShop(){
 setNum(walletEl,fmt(P.coins));
@@ -2776,7 +2933,10 @@ $('swap10').disabled=P.circles<10;$('swapAll').disabled=P.circles<2;
 $('tabSkins').classList.toggle('on',tab==='skins');
 $('tabUps').classList.toggle('on',tab==='ups');
 $('tabBars').classList.toggle('on',tab==='bars');
+$('tabSet').classList.toggle('on',tab==='set');
+var isSet=tab==='set';$('setBox').hidden=!isSet;listEl.hidden=isSet;$('gfxPx').classList.toggle('sel',PIX);$('gfxHd').classList.toggle('sel',!PIX);
 listEl.innerHTML='';
+if(isSet)return;
 listEl.className='list'+(tab==='ups'?' ups':'');
 if(tab==='bars'||tab==='skins'){
 var isBar=tab==='bars',list=isBar?BARS:SKINS,own=isBar?P.ownedBar:P.owned,cur=isBar?P.bar:P.skin,price=BAG[tab];
@@ -2805,7 +2965,7 @@ var bb=document.createElement('button');bb.type='button';bb.className='buy';bb.t
 if(P.coins<price)bb.disabled=true;
 bb.onclick=function(){openBag(tab);};
 bag.appendChild(bb);listEl.appendChild(bag);
-var grp=[''].concat(RORD).map(function(k){return list.filter(function(x){return (x.rar||'')===k;});}).filter(function(g){return g.length;});
+var grp=['event',''].concat(RORD).map(function(k){return list.filter(function(x){return (x.rar||'')===k;});}).filter(function(g){return g.length;});
 grp.forEach(function(g){
 var k=g[0].rar,hd=document.createElement('div');hd.className='rar-h';
 var hn=document.createElement('span');hn.textContent=k?RAR[k].n:'Стартовый';if(k)rarPaint(hn,k);else hn.style.color='#9fb0d6';hd.appendChild(hn);
@@ -2833,6 +2993,14 @@ if(cur===it.id)b2.disabled=true;
 b2.onclick=function(){sellItem(tab,it);};
 bx.appendChild(b2);
 }
+}else if(it.rar==='event'){
+hwCalc();
+if(HW.on){b1.textContent='Купить · '+it.price;b1.className='buy';b1.disabled=P.coins<it.price;
+b1.onclick=function(){hwCalc();if(!HW.on||P.coins<it.price)return;P.coins-=it.price;own[it.id]=1;P.skin=it.id;applySkin(it);buildTricks();save();hud();renderShop();popup(CX,150,'🎃 Тыква твоя!','#ff8a1f',20,2);};
+var ev=document.createElement('p');ev.className='rar';ev.style.color='#ff8a1f';ev.textContent='Ивент идёт! Осталось '+mmss(HW.left/1000);card.appendChild(ev);}
+else{b1.textContent='Только в Хеллоуин';b1.disabled=true;b1.className='buy';
+var ev2=document.createElement('p');ev2.className='rar';ev2.style.color='#ff8a1f';ev2.textContent='Ивент каждый час на 10 минут. Начнётся через '+mmss(HW.left/1000);card.appendChild(ev2);}
+bx.appendChild(b1);
 }else{
 b1.textContent='Только из сумки';b1.disabled=true;b1.className='buy';bx.appendChild(b1);
 }
@@ -2877,6 +3045,8 @@ var DAILY=[
 {t:'chest',v:2000,ic:'👑',n:'Сундук чемпиона',d:'2000 монет и скин: эпический, легендарный или даже хроматический!'}
 ];
 var TIME={off:null,state:'wait'};
+var HW={on:false,left:0};
+function hwCalc(){var t=nowT(),h=((t%3600000)+3600000)%3600000;HW.on=h<600000;HW.left=HW.on?600000-h:3600000-h;return HW;}
 var ONSITE=/github\.io$/.test(location.hostname);
 function nowT(){return Date.now()+(TIME.off||0);}
 function syncTime(){
@@ -2946,7 +3116,12 @@ $('shopBtn').addEventListener('click',openShop);
 $('teleBtn').addEventListener('click',openTele);$('tclose').addEventListener('click',closeTele);
 $('telecv').addEventListener('click',function(e){var r=this.getBoundingClientRect(),dpr=this.width/r.width,x=(e.clientX-r.left)*dpr,y=(e.clientY-r.top)*dpr,best=null,bd=1e9;
 ['sun','earth','moon','mars','jupiter'].forEach(function(k){var p=telePos(k,TELE.ot),d=Math.hypot(p[0]-x,p[1]-y)-p[2];if(d<bd){bd=d;best=k;}});if(bd<30*dpr){if(best==='jupiter'){$('teleHint').textContent='На Юпитер телепортироваться нельзя';return;}if(best===P.loc){$('teleHint').textContent='Ты уже здесь';return;}if(TELE.sel===best){teleTo(best);return;}TELE.sel=best;$('teleHint').textContent='Нажми ещё раз, чтобы подтвердить';}});
-setInterval(teleShow,500);setInterval(sunTick,250);
+setInterval(teleShow,500);setInterval(pumpShow,500);
+$('pumpBtn').addEventListener('click',pumpUse);
+var hwWas=null;
+setInterval(function(){hwCalc();var b=$('hwBan');if(b){b.hidden=!HW.on;if(HW.on)$('hwLeft').textContent=mmss(HW.left/1000);}
+if(hwWas!==null&&hwWas!==HW.on){if(HW.on)popup(CX,150,'🎃 НАЧАЛСЯ ХЕЛЛОУИН! Тыква в магазине','#ff8a1f',17,3);if(!shopEl.hidden&&tab==='skins')renderShop();}
+hwWas=HW.on;},500);setInterval(sunTick,250);
 window.addEventListener('storage',function(e){
 if(e.key==='turnik-fx1'&&e.newValue){var r0='Ты забанен';try{r0=localStorage.getItem('turnik-fx2')||r0;}catch(x){}paintSky(r0);return;}
 if(e.key!==SAVE_KEY||!e.newValue)return;
@@ -2963,6 +3138,8 @@ else if(e.code==='Enter'||e.code==='ArrowDown'||e.code==='KeyS'){e.preventDefaul
 })();
 $('close').addEventListener('click',closeShop);
 $('tabSkins').addEventListener('click',function(){tab='skins';REVEAL=null;renderShop();});
+$('tabSet').addEventListener('click',function(){tab='set';REVEAL=null;saveInfo();renderShop();});
+$('gfxPx').addEventListener('click',function(){setGfx(true);});$('gfxHd').addEventListener('click',function(){setGfx(false);});
 $('tabUps').addEventListener('click',function(){tab='ups';renderShop();});
 $('tabBars').addEventListener('click',function(){tab='bars';REVEAL=null;renderShop();});
 var MACH=[
@@ -3137,7 +3314,7 @@ a=$('gTarget');if(a&&GY.started)a.textContent=GY.taps>0?'Взлёт до: '+char
 if(GY.started&&GY.t<=0)finishGym();
 }
 function drawRoom(cnv,t){
-var dpr=Math.min(window.devicePixelRatio||1,2),w=cnv.clientWidth||360,h=cnv.clientHeight||387;
+var dpr=PXD,w=cnv.clientWidth||360,h=cnv.clientHeight||387;
 var pw=Math.round(w*dpr),ph=Math.round(h*dpr);
 if(cnv.width!==pw||cnv.height!==ph){cnv.width=pw;cnv.height=ph;}
 var old=ctx,oldSq=S.sq;ctx=cnv.getContext('2d');S.sq=0;
@@ -3170,7 +3347,7 @@ emptyMachine(MACH[i].id,xs[i],base);
 ctx.restore();
 ctx.font='800 11px Unbounded,"Arial Black",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.lineJoin='round';
 var nm=MACH[i].name.toUpperCase();ctx.lineWidth=4;ctx.strokeStyle=INK;ctx.strokeText(nm,xs[i],base+20);ctx.fillStyle='#ffffff';ctx.fillText(nm,xs[i],base+20);
-var cnt=(P.gs&&P.gs[MACH[i].id])||0;ctx.font='700 11px Onest,system-ui,sans-serif';ctx.fillStyle='#ffd23f';ctx.fillText(cnt+' нажатий',xs[i],base+36);
+var cnt=(P.gs&&P.gs[MACH[i].id])||0;ctx.font='700 11px Unbounded,system-ui,sans-serif';ctx.fillStyle='#ffd23f';ctx.fillText(cnt+' нажатий',xs[i],base+36);
 ctx.fillStyle='#b9f03c';ctx.beginPath();var ay=base-120+bob;ctx.moveTo(xs[i]-9,ay);ctx.lineTo(xs[i]+9,ay);ctx.lineTo(xs[i],ay+12);ctx.closePath();ctx.fill();ctx.lineWidth=2;ctx.strokeStyle=INK;ctx.stroke();
 }
 if(GY.flash>0){
@@ -3187,7 +3364,7 @@ var cy=fy+(lh-fy)*0.86;
 ctx.save();ctx.translate(200,cy);ctx.scale(.78,.78);ctx.translate(-200,-cy);
 drawStand(200,t,cy,musL()>=2?'joy':'smile');
 ctx.restore();
-ctx=old;S.sq=oldSq;
+pixQ(ctx);ctx=old;S.sq=oldSq;
 }
 function emptyMachine(id,x,base){
 ctx.lineJoin='round';ctx.lineCap='round';
@@ -3208,7 +3385,7 @@ ctx.beginPath();ctx.moveTo(x-52,base-74);ctx.lineTo(x+52,base-74);ctx.strokeStyl
 }
 }
 function drawMachine(cnv,id,lift,phase,t){
-var dpr=Math.min(window.devicePixelRatio||1,2),w=cnv.clientWidth||120,h=cnv.clientHeight||96;
+var dpr=PXD,w=cnv.clientWidth||120,h=cnv.clientHeight||96;
 var pw=Math.round(w*dpr),ph=Math.round(h*dpr);
 if(cnv.width!==pw||cnv.height!==ph){cnv.width=pw;cnv.height=ph;}
 var old=ctx,oldSq=S.sq;ctx=cnv.getContext('2d');S.sq=0;
@@ -3222,7 +3399,7 @@ ctx.translate(0,oy);
 if(id==='run')drawRunner(phase,lift,t);
 else if(id==='pull')drawPull(lift,t);
 else drawBench(lift,t);
-ctx=old;S.sq=oldSq;
+pixQ(ctx);ctx=old;S.sq=oldSq;
 }
 function drawRunner(p,lift,t){
 var x=190,gy=236;
@@ -3552,16 +3729,16 @@ ctx.restore();
 }
 }
 function drawOppIcon(cnv,o){
-var dpr=Math.min(window.devicePixelRatio||1,2),w=cnv.clientWidth||74;
+var dpr=PXD,w=cnv.clientWidth||74;
 cnv.width=Math.round(w*dpr);cnv.height=Math.round(w*dpr);
 var old=ctx,oldSkin=CUR;ctx=cnv.getContext('2d');applySkin(o.skin);
 var s=cnv.width/120;ctx.setTransform(s,0,0,s,0,0);
 ctx.fillStyle='#34477a';ctx.fillRect(0,0,120,120);
 ctx.translate(60,70);ctx.scale(2.1,2.1);head('smile',1);
-ctx=old;applySkin(oldSkin);
+pixQ(ctx);ctx=old;applySkin(oldSkin);
 }
 function drawBattle(cnv,t){
-var dpr=Math.min(window.devicePixelRatio||1,2),w=cnv.clientWidth||360,h=cnv.clientHeight||324;
+var dpr=PXD,w=cnv.clientWidth||360,h=cnv.clientHeight||324;
 var pw=Math.round(w*dpr),ph=Math.round(h*dpr);
 if(cnv.width!==pw||cnv.height!==ph){cnv.width=pw;cnv.height=ph;}
 var old=ctx,oldSkin=CUR,oldSq=S.sq;ctx=cnv.getContext('2d');S.sq=0;
@@ -3648,14 +3825,16 @@ ctx.fillStyle='rgba(16,28,54,.35)';ctx.fillRect(0,0,400,lh);
 ctx.font='800 '+(nn>0?72:44)+'px Unbounded,"Arial Black",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
 ctx.lineWidth=8;ctx.strokeStyle=INK;ctx.strokeText(tx,200,lh/2);ctx.fillStyle='#ffd23f';ctx.fillText(tx,200,lh/2);
 }
-ctx=old;S.sq=oldSq;
+pixQ(ctx);ctx=old;S.sq=oldSq;
 }
 var RS=3,dtAvg=1/60,lowT=0;
 function fit(){
 var dpr=Math.min(window.devicePixelRatio||1,RS);
 var r=cv.getBoundingClientRect();
 var cw=Math.max(200,r.width),ch=Math.max(300,r.height);
-cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);
+if(PIX){var dk=Math.max(2,Math.round(PXM*(window.devicePixelRatio||1)))/(window.devicePixelRatio||1);cv.width=Math.round(cw/dk);cv.height=Math.round(ch/dk);}
+else{cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);}
+tcv.width=Math.round(cw*dpr);tcv.height=Math.round(ch*dpr);
 HS=W*ch/cw;
 measure();
 }
@@ -3681,7 +3860,7 @@ if(SKY_DIM)S.paused=true;
 if(GY.open)gymTick(dt);
 if(BT.open)battleTick(dt);
 var covered=S.paused&&(GY.open||BT.open||!shopEl.hidden);
-if(!covered||!FRAME_OK){render(T);FRAME_OK=covered;}
+if(!covered||!FRAME_OK){render(T);pixQ(ctx);FRAME_OK=covered;}
 if(!covered)shakeStage();
 requestAnimationFrame(frame);
 }
@@ -3737,6 +3916,7 @@ dropBtn.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefa
 function trickKey(code){
 if(code==='KeyQ'||code==='KeyF'){levitate();return null;}
 if(code==='KeyT'){openTele();return null;}
+if(code==='KeyP'){pumpUse();return null;}
 if(code==='Space'||code==='ArrowUp'||code==='KeyW')return 'star';
 if(code==='KeyE')return 'superman';
 if(code==='KeyR')return 'split';

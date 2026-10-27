@@ -2476,15 +2476,12 @@ if(P.loc==='earth'||!P.loc){hwGround(t);return;}
 if(P.loc==='moon'){
 [[30,26],[78,18],[118,32],[288,22],[330,30],[366,16]].forEach(function(c,i){hwCandle(c[0],G-2,c[1],t,i);});return;}
 if(P.loc==='mars'){
-hwPumpkin(100,G-74,16,t);hwPumpkin(176,G-108,15,t);hwPumpkin(240,G-56,13,t);hwPumpkin(306,G-104,17,t);
-[[22,G-12,13],[60,G-9,9],[105,G-14,16],[150,G-8,8],[248,G-12,12],[350,G-16,18],[386,G-8,8]].forEach(function(c){hwPumpkin(c[0],c[1],c[2],t);});
-ctx.strokeStyle='#3e8948';ctx.lineWidth=2.4;ctx.beginPath();ctx.moveTo(0,G-4);
-for(var x=0;x<=W;x+=16)ctx.lineTo(x,G-4-Math.abs(Math.sin(x*0.09))*6);ctx.stroke();
+[[80,10],[112,16],[144,10],[236,11],[334,9]].forEach(function(c){hwPumpkin(c[0],G-c[1]+1,c[1],t);});
 return;}
 }
 function hwMarsSky(t,cam){
 var a=clamp(1-cam/9000,0,1);if(a<=0)return;ctx.save();ctx.globalAlpha=a;
-pumpkinFace(70,Math.max(HUDL+80,OY+60)+cam*0.03,16,t);
+pumpkinFace(90,Math.max(HUDL+90,OY+70)+cam*0.03,17,t);
 pumpkinFace(210,Math.max(HUDL+50,OY+30)+cam*0.02,9,t+1);
 ctx.restore();
 }

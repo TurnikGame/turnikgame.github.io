@@ -427,14 +427,6 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     </div>
     <div class="list" id="list"></div>
     <div id="setBox" class="list ups" hidden>
-    <div class="swap" id="gfxBox">
-      <h3>Графика</h3>
-      <p>Пиксели: настоящий ретро-стиль, как на старой приставке. Красивая: гладкая графика.</p>
-      <div class="gfx-row">
-        <button id="gfxPx" type="button">👾 Пиксели</button>
-        <button id="gfxHd" type="button">✨ Красивая</button>
-      </div>
-    </div>
     <div class="swap" id="xfer">
       <h3>Перенос прогресса</h3>
       <p>Код переносит монеты, скины, мышцы и всё остальное на другой телефон.</p>
@@ -457,7 +449,7 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <button type="button" id="tutAgain" class="tmini">🎓 Пройти обучение</button>
     <p class="note" id="timeInfo">Время: проверяем…</p>
     <p class="note" id="saveInfo">Прогресс сохраняется на этом устройстве.</p>
-    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.17</p>
+    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.18</p>
     </div>
   </div>
 </div>
@@ -599,7 +591,7 @@ var TRICKS=[
 ];
 var $=function(id){return document.getElementById(id);};
 var cv=$('c'),ctx=cv.getContext('2d',{willReadFrequently:true});
-var PIX=true;try{PIX=localStorage.getItem('turnik-gfx')!=='hd';}catch(e){}
+var PIX=false;
 document.documentElement.classList.toggle('px',PIX);
 var PXM=4,PXD=PIX?1/2.2:Math.min(window.devicePixelRatio||1,2);
 var PAL='181425262b443a44665a69888b9bb4c0cbdcffffff3e2731733e39a22633e43b44be4a2fd77643f77622feae34fee761ead4aae4a672b86f50c2856963c74d3e8948265c42193c3e124e890099db2ce8f568386cb55088f6757ae8b796ff00445fb4f08fd3ff4a8fe02b5fae3c2a635a3d8c1b2b4f0f1730b9f03cffd23fff7a1affd0a0e8a0707fd85a9fe0ffc59bff4a12062a0c086b2a14a8360c7a3420d06a3cb5532f'.replace(/ /g,'');
@@ -2994,7 +2986,7 @@ $('tabSkins').classList.toggle('on',tab==='skins');
 $('tabUps').classList.toggle('on',tab==='ups');
 $('tabBars').classList.toggle('on',tab==='bars');
 $('tabSet').classList.toggle('on',tab==='set');
-var isSet=tab==='set';$('setBox').hidden=!isSet;listEl.hidden=isSet;$('gfxPx').classList.toggle('sel',PIX);$('gfxHd').classList.toggle('sel',!PIX);
+var isSet=tab==='set';$('setBox').hidden=!isSet;listEl.hidden=isSet;
 listEl.innerHTML='';
 if(isSet)return;
 listEl.className='list'+(tab==='ups'?' ups':'');
@@ -3200,7 +3192,6 @@ else if(e.code==='Enter'||e.code==='ArrowDown'||e.code==='KeyS'){e.preventDefaul
 $('close').addEventListener('click',closeShop);
 $('tabSkins').addEventListener('click',function(){tab='skins';REVEAL=null;renderShop();});
 $('tabSet').addEventListener('click',function(){tab='set';REVEAL=null;saveInfo();renderShop();});
-$('gfxPx').addEventListener('click',function(){setGfx(true);});$('gfxHd').addEventListener('click',function(){setGfx(false);});
 $('tabUps').addEventListener('click',function(){tab='ups';renderShop();});
 $('tabBars').addEventListener('click',function(){tab='bars';REVEAL=null;renderShop();});
 var MACH=[

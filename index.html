@@ -496,7 +496,7 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <button type="button" id="tutAgain" class="tmini">🎓 Пройти обучение</button>
     <p class="note" id="timeInfo">Время: проверяем…</p>
     <p class="note" id="saveInfo">Прогресс сохраняется на этом устройстве.</p>
-    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.39</p>
+    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.40</p>
     </div>
   </div>
 </div>
@@ -685,7 +685,7 @@ function wrap(a){a=(a+Math.PI)%TAU;if(a<0)a+=TAU;return a-Math.PI;}
 function DS(){return P.loc==='uranus'?1.8:P.loc==='sun'?1:P.loc==='mars'?2.25:(P.loc==='moon'?1.5:1);}
 function zoneAt(alt){var z=ZONES[0],d=DS();for(var i=1;i<ZONES.length;i++)if(alt>=ZONES[i].a*d)z=ZONES[i];return z;}
 function multTxt(m){return '×'+String(m).replace('.',',');}
-function LM(){return P.loc==='uranus'?(urZap()?50:5):P.loc==='sun'?20:P.loc==='mars'?4:(P.loc==='moon'?2:1);}
+function LM(){return P.loc==='uranus'?(urZap()?15:5):P.loc==='sun'?20:P.loc==='mars'?4:(P.loc==='moon'?2:1);}
 var MOON_NAMES=['Луна','Над Луной','Космос','Дальний космос','Марс'];
 var URAN_NAMES=['Уран','Кольца Урана','Миранда','Дальний космос','Нептун'],MARS_NAMES=['Марс','Над Марсом','Фобос','Дальний космос','Юпитер'],SUN_NAMES=['Солнце','Корона','Протуберанцы','Дальний космос','Меркурий'];
 function zName(z){return P.loc==='uranus'?URAN_NAMES[ZONES.indexOf(z)]:P.loc==='sun'?SUN_NAMES[ZONES.indexOf(z)]:P.loc==='moon'?MOON_NAMES[ZONES.indexOf(z)]:(P.loc==='mars'?MARS_NAMES[ZONES.indexOf(z)]:z.name);}
@@ -1134,7 +1134,6 @@ else if(S.mode==='stand')jump();
 function circleDone(){
 S.turns++;S.joy=0.9;
 var v=Math.max(LM(),S.fly&&S.barAlt>0?Math.ceil(zoneAt(G-PY()).m):1)+(S.streak>=2?lvl('perfect'):0);
-if(P.loc==='uranus'&&urZap())v*=5;
 S.pendC+=v;
 popup(CX,PY()+222,'КРУГ! x'+S.turns+'  +'+fmt(v),urZap()&&P.loc==='uranus'?'#7dff5a':'#b9f03c',21,1.3);
 confetti(CX,PY()+10+S.cam,20);

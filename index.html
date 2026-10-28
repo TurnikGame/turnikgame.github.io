@@ -491,7 +491,7 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <button type="button" id="tutAgain" class="tmini">🎓 Пройти обучение</button>
     <p class="note" id="timeInfo">Время: проверяем…</p>
     <p class="note" id="saveInfo">Прогресс сохраняется на этом устройстве.</p>
-    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.33</p>
+    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.34</p>
     </div>
   </div>
 </div>
@@ -1459,7 +1459,7 @@ var UR_ITEMS=[['pipe',-1120,0],['peb',-1060,0],['can',-1000,0],['cry',-820,-220]
 ['gear',560,0],['nut',700,-60],['map',735,-60],['pipe',760,-60],['peb',900,0],['sock',1118,-370],['cry',1150,0],
 ['pipe',260,320],['map',230,320],['bone',300,320],['bolt',330,320],['cry',450,320],['nut',520,320],['gear',580,320],['nut',640,320],['cry',700,320],['bolt',760,320],['can',800,320],['pipe',610,320]];
 var UR_PLAT=[[-900,-670,-220,1],[-440,-340,-90,0],[-320,-220,-170,0],[680,780,-60,1]];
-var UR_LAD=[{x:-690,y0:-220,y1:0},{x:410,y0:0,y1:320}];
+var UR_LAD=[{x:-678,y0:-220,y1:0},{x:410,y0:0,y1:320}];
 var HAMMER=null;
 function UR_MAX_X(){return (S.ucx||0)+W/2-4;}
 var UR_MOV=[{x0:850,x1:925,yb:-110,a:36,sp:1.3,ph:0},{x0:965,x1:1040,yb:-200,a:36,sp:1.0,ph:1.2},{x0:1050,x1:1120,yb:-288,a:30,sp:1.6,ph:2.4}];
@@ -1579,7 +1579,7 @@ if(S.umov!=null){var Mv=UR_MOV[S.umov];if(S.uon&&S.ux>=Mv.x0-4&&S.ux<=Mv.x1+4&&S
 S.uvy=Math.min(S.uvy+1500*h,1400);var ny=S.uy+S.uvy*h;
 // стены: скала и ящики, пещера, края мира
 var blocks=[[-900,-700,-220],[680,780,-60]];
-for(var bi=0;bi<blocks.length;bi++){var B2=blocks[bi];if(S.uy>B2[2]+2&&S.ux>B2[0]-14&&S.ux<B2[1]+14&&S.uy<=1){S.ux=px<=B2[0]-14?B2[0]-14:(px>=B2[1]+14?B2[1]+14:px);}}
+for(var bi=0;bi<blocks.length;bi++){var B2=blocks[bi];if(S.uy>B2[2]+2&&S.ux>B2[0]-14&&S.ux<B2[1]+14&&S.uy<=1){if(px<=B2[0]-14)S.ux=B2[0]-14;else if(px>=B2[1]+14)S.ux=B2[1]+14;else S.ux=(S.ux-B2[0]<B2[1]-S.ux)?B2[0]-14:B2[1]+14;}}
 if(S.uy>24)S.ux=clamp(S.ux,215,urMelted()?1055:870);else S.ux=clamp(S.ux,-1160,1160);
 var land=null,isPlat=false;
 if(S.uvy>=0){

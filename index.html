@@ -491,7 +491,7 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <button type="button" id="tutAgain" class="tmini">🎓 Пройти обучение</button>
     <p class="note" id="timeInfo">Время: проверяем…</p>
     <p class="note" id="saveInfo">Прогресс сохраняется на этом устройстве.</p>
-    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.34</p>
+    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.37</p>
     </div>
   </div>
 </div>
@@ -736,6 +736,7 @@ var FBD='https://firestore.googleapis.com/v1/projects/turnik-d7951/databases/(de
 var FCFG={first:60000,rate:50000,prate:50000,evmax:60000,bucket:90000,grace:10000};
 (function(){try{var o=JSON.parse(localStorage.getItem('turnik-fb')||'null');if(o){FB.uid=o.uid||'';FB.rt=o.rt||'';FB.bid=o.bid||'';}}catch(e){}})();
 function fbStore(){try{localStorage.setItem('turnik-fb',JSON.stringify({uid:FB.uid,rt:FB.rt,bid:FB.bid}));}catch(e){}}
+function pPath(){return 'player/'+fbBid();}
 function fbBid(){if(!/^\d{8}$/.test(FB.bid)){FB.bid=String(Math.floor(10000000+Math.random()*90000000));fbStore();}return FB.bid;}
 function fbJson(r){return r.text().then(function(t){var j={};try{j=t?JSON.parse(t):{};}catch(e){}j._st=r.status;return j;});}
 function fbAuth(){
@@ -792,16 +793,16 @@ var br=String(g.bar||'');if(br&&fbPrice(BARS,br)>0){P.ownedBar[br]=1;P.bar=br;ou
 return out.join(', ');}
 function fbBanWrite(doc){
 var reason=String((function(){try{return localStorage.getItem('turnik-fx2');}catch(e){return '';}})()||'Бан').slice(0,40);
-var name=fbName('players/'+FB.uid);
+var name=fbName(pPath());
 if(doc)return fbCommit([{update:{name:name,fields:fbFields({ban:reason,bid:fbBid()})},updateMask:{fieldPaths:['ban','bid']},currentDocument:{exists:true}}]);
-var sv=fbS();return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:fbW(sv),cr:0,bid:fbBid(),ban:reason})},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:false}}]);
+var sv=fbS();return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:fbW(sv),cr:0,bid:fbBid(),uid:FB.uid,ban:reason})},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:false}}]);
 }
 // сверка с сервером: создать игрока, проверить бан/подарок/рост
 function fbSync(){
 if(FB.busy&&FB.pr)return FB.pr;FB.busy=true;
 var fin=function(st){FB.busy=false;FB.state=st;return st;};
 var srv=null;
-return FB.pr=fbAuth().then(function(){return fbGetT('players/'+FB.uid);}).then(function(rr){
+return FB.pr=fbAuth().then(function(){return fbGetT(pPath()).catch(function(e){if(String(e&&e.message).indexOf('read403')>=0&&!FB.bidRe){FB.bidRe=1;FB.bid='';fbStore();return fbGetT(pPath());}throw e;});}).then(function(rr){
 srv=rr.now;if(srv){TIME.off=srv-Date.now();TIME.state='ok';}var doc=rr.doc;
 if(doc&&/^\d{8}$/.test(doc.bid||'')&&doc.bid!==FB.bid){FB.bid=doc.bid;fbStore();}
 if(SKY_DIM){
@@ -811,11 +812,13 @@ if(doc&&doc.ban&&!P.banSrv){P.banSrv=1;save();}
 return fin('ban');
 }
 if(doc&&doc.ban){try{localStorage.setItem('turnik-fx2',String(doc.ban));}catch(e){}P.banSrv=1;fadeTint(String(doc.ban));return fin('ban');}
-var sv=fbS(),w=fbW(sv),name=fbName('players/'+FB.uid);
+var sv=fbS(),w=fbW(sv),name=fbName(pPath());
 if(!doc){
-var f={s:sv,w:w,cr:0,bid:fbBid()};if(w>FCFG.first)f.lock=true;
+return fbGet('players/'+FB.uid).catch(function(){return null;}).then(function(old){
+var f={s:sv,w:w,cr:0,bid:fbBid(),uid:FB.uid};if(old&&old.ban)f.ban=String(old.ban).slice(0,59);
+if(w>FCFG.first&&!(old&&!old.ban&&w<=(+old.w||0)+20000))f.lock=true;
 return fbCommit([{update:{name:name,fields:fbFields(f)},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:false}}])
-.then(function(){FB.lock=!!f.lock;FB.s=sv;return fin(f.lock?'lock':'ok');});
+.then(function(){FB.lock=!!f.lock;FB.s=sv;if(f.ban){P.banSrv=1;fadeTint(String(f.ban));return fin('ban');}return fin(f.lock?'lock':'ok');});});
 }
 FB.lock=!!doc.lock;if(FB.lock)return fin('lock');
 var gq=doc.gift,keepG=!!(gq&&typeof gq==='object'&&((gq.skin&&!(fbPrice(SKINS,String(gq.skin))>0))||(gq.bar&&!(fbPrice(BARS,String(gq.bar))>0))));
@@ -1459,7 +1462,7 @@ var UR_ITEMS=[['pipe',-1120,0],['peb',-1060,0],['can',-1000,0],['cry',-820,-220]
 ['gear',560,0],['nut',700,-60],['map',735,-60],['pipe',760,-60],['peb',900,0],['sock',1118,-370],['cry',1150,0],
 ['pipe',260,320],['map',230,320],['bone',300,320],['bolt',330,320],['cry',450,320],['nut',520,320],['gear',580,320],['nut',640,320],['cry',700,320],['bolt',760,320],['can',800,320],['pipe',610,320]];
 var UR_PLAT=[[-900,-670,-220,1],[-440,-340,-90,0],[-320,-220,-170,0],[680,780,-60,1]];
-var UR_LAD=[{x:-678,y0:-220,y1:0},{x:410,y0:0,y1:320}];
+var UR_LAD=[{x:-678,y0:-220,y1:0,ex:-700},{x:-924,y0:-220,y1:0,ex:-885},{x:410,y0:0,y1:320,ex:452}];
 var HAMMER=null;
 function UR_MAX_X(){return (S.ucx||0)+W/2-4;}
 var UR_MOV=[{x0:850,x1:925,yb:-110,a:36,sp:1.3,ph:0},{x0:965,x1:1040,yb:-200,a:36,sp:1.0,ph:1.2},{x0:1050,x1:1120,yb:-288,a:30,sp:1.6,ph:2.4}];
@@ -1565,7 +1568,7 @@ if(urBuilt()&&urAtBar()){S.mode='x';setMode('stand');S.sx=CX;S.sq=.25;urInvUi();
 function urPhys(h){
 var L=urOnLad(),up=S.kU||S.uU,dn=S.kD||S.uD,dir=(S.kL||S.uL?-1:0)+(S.kR||S.uR?1:0),px=S.ux,py=S.uy;
 if(S.ucl){if(!L||dir){S.ucl=false;}else{S.uvy=up?-170:(dn?170:0);S.uy+=S.uvy*h;S.ux+=(L.x-S.ux)*Math.min(1,h*10);
-if(S.uy<=L.y0){S.uy=L.y0;S.ucl=false;S.uvy=0;S.uon=true;S.ujl=true;S.ux=L.x===410?452:-700;}
+if(S.uy<=L.y0){S.uy=L.y0;S.ucl=false;S.uvy=0;S.uon=true;S.ujl=true;S.ux=L.ex;}
 if(S.uy>=L.y1){S.uy=L.y1;S.ucl=false;S.uvy=0;S.uon=true;}
 S.uwt=up||dn?S.uwt+h:0;return;}}
 if(L&&(up&&S.uy>L.y0+2||dn&&S.uy<L.y1-2)&&!S.ucl){S.ucl=true;S.uvy=0;return;}
@@ -3645,7 +3648,7 @@ updGift();if(!dailyEl.hidden)renderDaily();var ti=document.getElementById('timeI
 setTimeout(function(){fin(false);},8000);
 var urls=[url],h=location.hostname||'';
 if(!ONSITE&&/^https?:$/.test(location.protocol)&&h&&!/^(localhost|127\.0\.0\.1)$/.test(h))urls.unshift(location.pathname+'?t='+Date.now());
-var tryAt=function(i){if(i>=urls.length){fbAuth().then(function(){return fbGetT('players/'+FB.uid);}).then(function(r){if(r.now)fin(true,r.now-Date.now());else fin(false);},function(){fin(false);});return;}
+var tryAt=function(i){if(i>=urls.length){fbAuth().then(function(){return fbGetT(pPath());}).then(function(r){if(r.now)fin(true,r.now-Date.now());else fin(false);},function(){fin(false);});return;}
 var go=function(m){return fetch(urls[i],{method:m,cache:'no-store'}).then(function(r){var d=Date.parse(r.headers.get('date')||''),ag=+(r.headers.get('age')||0)||0;if(isFinite(d)){fin(true,d+ag*1000-Date.now());return true;}return false;});};
 try{go('HEAD').then(function(ok){if(!ok)return go('GET').then(function(ok2){if(!ok2)tryAt(i+1);});},function(){go('GET').then(function(ok2){if(!ok2)tryAt(i+1);},function(){tryAt(i+1);});});}catch(e){tryAt(i+1);}
 };
@@ -4688,7 +4691,7 @@ fbSync().then(function(st){
 if(st!=='ok'){busy=false;msg.textContent=errT(st);return;}
 var k=newK(),sv=FB.s||fbS(),x={};
 for(var key in P)if(ECO.indexOf(key)<0)x[key]=P[key];
-return fbCommit([{update:{name:fbName('codes/'+k),fields:fbFields({s:sv,x:JSON.stringify(x),rt:FB.rt,uid:FB.uid})},updateTransforms:[{fieldPath:'c',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:false}}])
+return fbCommit([{update:{name:fbName('codes/'+k),fields:fbFields({s:sv,x:JSON.stringify(x),rt:FB.rt,uid:FB.uid,b:FB.bid})},updateTransforms:[{fieldPath:'c',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:false}}])
 .then(function(){busy=false;var code=k.slice(0,4)+'-'+k.slice(4);box.hidden=false;box.readOnly=true;box.value=code;
 var done=function(){msg.textContent='Код скопирован. Он работает один раз и 24 часа.';};
 try{navigator.clipboard.writeText(code).then(done,function(){box.focus();box.select();msg.textContent='Выдели код и скопируй.';});}
@@ -4716,7 +4719,7 @@ busy=false;var o={};try{o=JSON.parse(d.x||'{}')||{};}catch(e){o={};}
 var s2=d.s;
 o.coins=Math.floor(+s2.coins||0);o.circles=Math.floor(+s2.lp||0)*2;o.owned=Object.assign({classic:1},s2.owned||{});o.ownedBar=Object.assign({steel:1},s2.ownedBar||{});o.up=s2.up||{};o.gym=!!s2.gym;
 if(!fitsRange(o)){msg.textContent='Код неверный. Проверь, что скопирован целиком.';reset();return;}
-FB.uid=d.uid;FB.rt=d.rt;FB.tok='';FB.exp=0;FB.bid='';fbStore();
+FB.uid=d.uid;FB.rt=d.rt;FB.tok='';FB.exp=0;FB.bid=/^\d{8}$/.test(d.b||'')?d.b:'';fbStore();
 take(o);setTimeout(fbSync,600);
 });
 }).catch(function(e){busy=false;msg.textContent=String(e&&e.message).indexOf('403')>=0?'Код устарел: коды работают только 24 часа.':errT('net');reset();});

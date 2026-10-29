@@ -511,7 +511,7 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <button type="button" id="tutAgain" class="tmini">🎓 Пройти обучение</button>
     <p class="note" id="timeInfo">Время: проверяем…</p>
     <p class="note" id="saveInfo">Прогресс сохраняется на этом устройстве.</p>
-    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.44</p>
+    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.45</p>
     </div>
   </div>
 </div>
@@ -806,6 +806,11 @@ return w+(s.gym?GYM_PRICE:0);}
 function fbPrice(list,id){for(var i=0;i<list.length;i++)if(list[i].id===id)return list[i].price||0;return 0;}
 function fbGiftVal(g){if(g==null)return 0;if(typeof g==='number')return Math.max(0,g);if(typeof g!=='object')return 0;
 return Math.max(0,+g.coins||0)+Math.max(0,+g.laps||0)/2+fbPrice(SKINS,String(g.skin||''))+fbPrice(BARS,String(g.bar||''));}
+function fbTakeApply(t){var ids=String(t||'').split(',').map(function(x){return x.trim();}),out=[];
+ids.forEach(function(id){if(!id)return;
+if(id!=='classic'&&P.owned[id]&&skinById(id)&&skinById(id).id===id){delete P.owned[id];if(P.skin===id)P.skin='classic';out.push('скин «'+skinById(id).name+'»');}
+else if(id!=='steel'&&P.ownedBar[id]&&barById(id)&&barById(id).id===id){delete P.ownedBar[id];if(P.bar===id)P.bar='steel';out.push('турник «'+barById(id).name+'»');}});
+return out.join(', ');}
 function fbGiftApply(g){var out=[];
 if(typeof g==='number')g={coins:g};if(!g||typeof g!=='object')return '';
 var c=Math.max(0,Math.floor(+g.coins||0));if(c){P.coins=Math.min(CAP.coins-1,(P.coins||0)+c);out.push('+'+c+' монет');}
@@ -847,7 +852,8 @@ var gq=doc.gift,keepG=!!(gq&&typeof gq==='object'&&((gq.skin&&!(fbPrice(SKINS,St
 if(keepG&&!FB.giftWarn){FB.giftWarn=1;popup(CX,150,'Тебе подарок! Обнови игру, чтобы получить его','#ffd23f',16,4);}
 var gift=keepG?0:fbGiftVal(doc.gift),gd='',snap=null;
 var fn=Math.max(0,Math.floor(+doc.fine||0)),fnd=0;
-if(fn>0||doc.gift!=null&&!keepG)snap=JSON.stringify(P);
+if(fn>0||doc.take!=null||doc.gift!=null&&!keepG)snap=JSON.stringify(P);
+var tk='';if(doc.take!=null){tk=fbTakeApply(doc.take);sv=fbS();w=fbW(sv);}
 if(fn>0){fnd=Math.min(fn,Math.floor(P.coins||0));P.coins=Math.max(0,(P.coins||0)-fn);sv=fbS();w=fbW(sv);}
 if(doc.gift!=null&&!keepG){FX_SKIP=Math.max(FX_SKIP,8);gd=fbGiftApply(doc.gift);sv=fbS();w=fbW(sv);}
 var undo=function(){if(snap){var o=JSON.parse(snap);for(var k in o)P[k]=o[k];}};
@@ -856,18 +862,20 @@ if(!srv)throw new Error('time');
 var hrs=Math.max(0,(srv-(+doc.t||0)-5000)/3600e3),rt=(doc.s&&doc.s.owned&&+doc.s.owned.pumpkin===1)?FCFG.prate:FCFG.rate,x=(+doc.cr||0)+rt*hrs,credit=Math.min(FCFG.bucket,x);
 var need=w-(+doc.w||0)-gift,ev=((srv%3600000)+3600000)%3600000<5*60000;
 if(ev&&need<=FCFG.evmax){FB.fast=0;var cre=Math.max(-FCFG.grace+1,Math.min(+doc.cr||0,credit)-1);
-return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:w,cr:cre+0.5,bid:FB.bid})},updateMask:{fieldPaths:['s','w','cr','bid'].concat(keepG?[]:['gift'],doc.fine!=null?['fine']:[])},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:true}}])
+return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:w,cr:cre+0.5,bid:FB.bid})},updateMask:{fieldPaths:['s','w','cr','bid'].concat(keepG?[]:['gift'],doc.fine!=null?['fine']:[],doc.take!=null?['take']:[])},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:true}}])
 .then(function(){FB.s=sv;
 if(fn>0){save();hud();if(!shopEl.hidden)renderShop();popup(CX,190,'Штраф системы: −'+fnd+' монет','#ff6b6b',17,4);}
 if(gd){FX_SKIP=3;save();hud();applySkin(skinById(P.skin));buildTricks();if(!shopEl.hidden)renderShop();popup(CX,150,'Подарок от системы: '+gd+'!','#ffd23f',17,3.5);}
+if(tk){S.mim=null;save();hud();applySkin(skinById(P.skin));buildTricks();if(!shopEl.hidden)renderShop();popup(CX,230,'Система забрала: '+tk,'#ff6b6b',16,4);}
 return fin('ok');},function(e){undo();throw e;});}
 if(need>credit+FCFG.grace){undo();var lack=need-FCFG.grace-credit;FB.fast=lack>FCFG.bucket-credit?-1:Math.ceil(lack/rt*60);return fin('fast');}
 FB.fast=0;
 var cr=Math.max(-FCFG.grace,credit-Math.max(0,need)-500);
-return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:w,cr:cr+0.5,bid:FB.bid})},updateMask:{fieldPaths:['s','w','cr','bid'].concat(keepG?[]:['gift'],doc.fine!=null?['fine']:[])},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:true}}])
+return fbCommit([{update:{name:name,fields:fbFields({s:sv,w:w,cr:cr+0.5,bid:FB.bid})},updateMask:{fieldPaths:['s','w','cr','bid'].concat(keepG?[]:['gift'],doc.fine!=null?['fine']:[],doc.take!=null?['take']:[])},updateTransforms:[{fieldPath:'t',setToServerValue:'REQUEST_TIME'}],currentDocument:{exists:true}}])
 .then(function(){FB.s=sv;
 if(fn>0){save();hud();if(!shopEl.hidden)renderShop();popup(CX,190,'Штраф системы: −'+fnd+' монет','#ff6b6b',17,4);}
 if(gd){FX_SKIP=3;save();hud();applySkin(skinById(P.skin));buildTricks();if(!shopEl.hidden)renderShop();popup(CX,150,'Подарок от системы: '+gd+'!','#ffd23f',17,3.5);}
+if(tk){S.mim=null;save();hud();applySkin(skinById(P.skin));buildTricks();if(!shopEl.hidden)renderShop();popup(CX,230,'Система забрала: '+tk,'#ff6b6b',16,4);}
 return fin('ok');},function(e){undo();throw e;});
 },function(e){undo();throw e;});
 }).catch(function(e){FB.err=String(e&&e.message||e).slice(0,40);return fin('net');});

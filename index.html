@@ -511,7 +511,7 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <button type="button" id="tutAgain" class="tmini">🎓 Пройти обучение</button>
     <p class="note" id="timeInfo">Время: проверяем…</p>
     <p class="note" id="saveInfo">Прогресс сохраняется на этом устройстве.</p>
-    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.47</p>
+    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.48</p>
     </div>
   </div>
 </div>
@@ -988,7 +988,7 @@ var air=m==='air';
 if(air&&prevM!=='air')buildTricks();
 if(!air)S.lev=0;
 var spm=m==='space';
-lrBox.hidden=!air;bigBtn.hidden=air||spm;dropBtn.hidden=air||spm;
+lrBox.hidden=!air;bigBtn.hidden=air||spm;dropBtn.hidden=air||spm;lrBox.style.opacity='';lrBox.style.pointerEvents='';
 if(!spm){var sce=document.getElementById('spc');if(sce)sce.hidden=true;var rce=document.getElementById('spReach');if(rce)rce.hidden=true;}
 if(m==='hang'){bigBtn.textContent='Раскачаться';bigBtn.disabled=false;dropBtn.disabled=false;}
 else if(m==='stand'){bigBtn.textContent='Запрыгнуть';bigBtn.disabled=false;dropBtn.disabled=true;dropBtn.hidden=true;}
@@ -1002,6 +1002,7 @@ if(!air)clearHolds();
 var hb=document.getElementById('homeBtn');if(hb)hb.hidden=!(P.loc!=='earth'&&P.loc!=='sun'&&P.loc!=='uranus'&&(m==='stand'||m==='hang')&&!S.fly);
 var ue=document.getElementById('urExp');if(ue)ue.hidden=!(P.loc==='uranus'&&urBuilt()&&(m==='stand'||m==='hang')&&!S.fly);
 var up=document.getElementById('urPad');if(up){up.hidden=m!=='urwalk'&&m!=='anti';['urJ','urAct'].forEach(function(id){var q=document.getElementById(id);if(q)q.hidden=m==='anti';});}
+if(m==='warp'&&S.wp&&S.wp.from){bigBtn.hidden=true;dropBtn.hidden=true;lrBox.hidden=false;lrBox.style.opacity='0';lrBox.style.pointerEvents='none';}
 if(m==='urboost'||m==='anti'||m==='jupthru'){bigBtn.hidden=true;dropBtn.hidden=true;}if(m!=='urboost')try{ubHide();}catch(e){}try{urInvUi();}catch(e){}if(m==='urwalk'){bigBtn.hidden=true;dropBtn.hidden=true;}
 }
 function levitate(){
@@ -1424,17 +1425,16 @@ ctx.save();ctx.translate(me[0],me[1]);ctx.rotate(t*5);ctx.scale(0.24,0.24);figur
 }
 var WARP_NAME={uranus:'Сбился с курса… УРАН?!',sun:'Летим на Солнце!',earth:'Летим на Землю!',moon:'Летим на Луну!',mars:'Летим на Марс!'};
 var PULL_T=3.4,PULL_FROM=null;
+function pullFade(){return S.pull?clamp((S.pull.t-(PULL_T-1.7))/1.1,0,1):0;}
 function startPull(to,go){S.pull={to:to,t:0,go:go};S.obs=[];S.lev=0;}
 function drawPullIn(t){
 var pu=S.pull;if(!pu||S.mode!=='air')return;
-var u=clamp(pu.t/PULL_T,0,1),e=u*u*(3-2*u),top=Math.max(HUDL+40,60);
-var we=0.26,pcx=CX,pcy=(top-30)+e*(90+we*(HS*0.42-top-60)),pr=7+e*e*53;
-var gc=pu.to==='mars'?'255,140,90':(pu.to==='jupiter'?'240,200,150':(pu.to==='earth'?'120,190,255':'220,225,240'));
-var gl=ctx.createRadialGradient(pcx,pcy,pr*0.6,pcx,pcy,pr*3+40*e);gl.addColorStop(0,'rgba('+gc+','+(0.45*e)+')');gl.addColorStop(1,'rgba('+gc+',0)');
-ctx.fillStyle=gl;ctx.fillRect(pcx-pr*4-50,pcy-pr*4-50,pr*8+100,pr*8+100);
+var u=clamp(pu.t/PULL_T,0,1),e=u*u*u,top=Math.max(HUDL+40,60);
+var we=0.26,pcx=CX,pcy=(top-30)+(u*u*(3-2*u))*(90+we*(HS*0.42-top-60)),pr=7+e*53;
+warpBG(1.25*u,Math.pow(u,1.3));
+var gl=ctx.createRadialGradient(pcx,pcy,pr*0.8,pcx,pcy,pr*1.5);gl.addColorStop(0,'rgba('+warpGlow(pu.to)+')');gl.addColorStop(1,'rgba(0,0,0,0)');
+ctx.save();ctx.globalAlpha=e;ctx.fillStyle=gl;ctx.fillRect(pcx-pr*1.6,pcy-pr*1.6,pr*3.2,pr*3.2);ctx.restore();
 if(pcy+pr>0)drawPlanet(pcx,pcy,pr,pu.to,t);
-if(u>0.25){ctx.save();ctx.globalAlpha=Math.min(0.5,(u-0.25));ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=1.5;
-for(var i=0;i<14;i++){var sx=(i*73.7+17)%W,sy=((i*131.3)%HS+pu.t*(300+900*u))%HS,ln=10+40*u;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(sx+(pcx-sx)*0.02,sy-ln);ctx.stroke();}ctx.restore();}
 }
 function startWarp(to,done,t0){S.pull=null;
 S.obs=[];S.trick=null;S.wf=0;S.lev=0;parts.length=0;
@@ -1443,19 +1443,25 @@ setMode('warp');
 }
 function warpStep(h){
 var w=S.wp;if(!w)return;
-w.t+=h;
+if(w.from){w.rp=Math.min(1,(w.rp||0.35)+h*1.1);w.t+=h*w.rp;}else w.t+=h;
 if(w.t>=2.3&&!w.fl){w.fl=true;S.flash=1;S.shake=1;}
 if(w.t>=2.55){var d=w.done;S.wp=null;d();}
 }
+function warpBG(wt,al){
+ctx.save();ctx.globalAlpha=al;
+var g=ctx.createLinearGradient(0,0,0,HS);g.addColorStop(0,'#05040f');g.addColorStop(1,'#120c2a');ctx.fillStyle=g;ctx.fillRect(0,0,W,HS);
+var u=clamp(wt/2.3,0,1),e=Math.pow(u,2.2);
+for(var i=0;i<stars.length;i++){var st=stars[i],y=((st[1]*HS/H+wt*(200+e*1400)*(0.4+st[2]*0.5))%HS+HS)%HS;
+ctx.globalAlpha=0.6*al;ctx.fillStyle='#fff';ctx.fillRect(st[0],y,st[2],Math.max(st[2],e*26*st[2]));}
+ctx.restore();
+}
+function warpGlow(to){return to==='mars'?'255,140,90,.35':(to==='earth'?'120,190,255,.35':(to==='jupiter'?'240,200,150,.35':'220,225,240,.3'));}
 function drawWarp(t){
 var w=S.wp;if(!w)return;
-var g=ctx.createLinearGradient(0,0,0,HS);g.addColorStop(0,'#05040f');g.addColorStop(1,'#120c2a');ctx.fillStyle=g;ctx.fillRect(0,0,W,HS);
+warpBG(w.t,1);
 var u=clamp(w.t/2.3,0,1),e=Math.pow(u,2.2);
-for(var i=0;i<stars.length;i++){var st=stars[i],y=((st[1]*HS/H+w.t*(200+e*1400)*(0.4+st[2]*0.5))%HS+HS)%HS;
-ctx.globalAlpha=0.6;ctx.fillStyle='#fff';ctx.fillRect(st[0],y,st[2],Math.max(st[2],e*26*st[2]));}
-ctx.globalAlpha=1;
 var top=Math.max(HUDL+40,60),pcx=CX,pcy=top+60+e*(HS*0.42-top-60),pr=22+e*e*560;
-var gl=ctx.createRadialGradient(pcx,pcy,pr*0.8,pcx,pcy,pr*1.5);gl.addColorStop(0,w.to==='mars'?'rgba(255,140,90,.35)':(w.to==='earth'?'rgba(120,190,255,.35)':'rgba(220,225,240,.3)'));gl.addColorStop(1,'rgba(0,0,0,0)');
+var gl=ctx.createRadialGradient(pcx,pcy,pr*0.8,pcx,pcy,pr*1.5);gl.addColorStop(0,'rgba('+warpGlow(w.to)+')');gl.addColorStop(1,'rgba(0,0,0,0)');
 ctx.fillStyle=gl;ctx.fillRect(pcx-pr*1.6,pcy-pr*1.6,pr*3.2,pr*3.2);
 drawPlanet(pcx,pcy,pr,w.to,t);
 var sx0=CX,sy0=HS*0.68,k2=Math.pow(u,1.4),ang=u*u*9,rad=(1-k2)*0+Math.sin(u*Math.PI)*60*(1-u);
@@ -2290,7 +2296,7 @@ if(S.lev<=0){S.lev=0;S.levCd=Date.now()+45000;}
 }else if(S.pull){
 var pu=S.pull;pu.t+=h;var pk=pu.t/PULL_T;
 S.vy-=(GA*Math.min(1,pk*4)+180+1500*pk*pk)*h;if(S.vy<-3200)S.vy=-3200;
-S.vx+=(CX-S.cx)*1.2*pk*h;
+S.vx+=(CX-S.cx)*1.2*pk*h;lrBox.style.opacity=String(1-pullFade());lrBox.style.pointerEvents=pullFade()>0.5?'none':'';
 }else{
 S.vy+=GA*h;if(S.vy>vt)S.vy=vt;
 }
@@ -2324,7 +2330,7 @@ S.th+=S.wf*h;
 var n=Math.floor(Math.abs(S.th-S.th0)/TAU);
 if(n>S.flips){S.flips=n;flipDone();}
 if(alt>S.maxAlt)S.maxAlt=alt;
-if(S.pull){if(S.pull.t>=PULL_T){var pg=S.pull.go;PULL_FROM={x:S.cx,y:S.cy+S.cam+OY,th:S.th};S.pull=null;pg();return;}}
+if(S.pull){if(S.pull.t>=PULL_T){var pg=S.pull.go;PULL_FROM={x:S.cx,y:S.cy+S.cam+OY,th:S.th,alt:G-S.cy};S.pull=null;pg();return;}}
 else if(P.loc==='earth'&&alt>=20000*DS())startPull('moon',function(){startWarp('moon',goMoon,1.25);});
 else if(P.loc==='moon'&&alt>=20000*DS())startPull('mars',function(){startWarp('mars',goMars,1.25);});
 else if(P.loc==='mars'&&alt>=20000*DS())startPull('jupiter',function(){goJupiter();});
@@ -3538,7 +3544,7 @@ MIMHEAD=false;tfDraw(t);
 ctx.restore();
 if(m==='air'){
 var alt=G-S.cy,z=zoneAt(alt);
-altimeter(alt);
+var pf0=pullFade();if(pf0<1){ctx.save();ctx.globalAlpha=1-pf0;altimeter(alt);ctx.restore();}
 obsWarnings(t,cam);
 if(!S.pull)label(zName(z)+' '+multTxt(z.m*LM()),CX,LT,16,z.col,'center');
 pendLabel(LT+30);
@@ -3626,7 +3632,8 @@ if(f>=1){cls='meter full';lbl='Хватит на круг!';}
 }else if(m==='air'||m==='super'||(m==='hang'&&S.fly)){
 var alt=m==='hang'?G-PY():G-S.cy;f=Math.sqrt(clamp(alt,0,ALTMAX*DS())/(ALTMAX*DS()));
 cls='meter alt';lbl='Высота '+Math.max(0,Math.round(alt/4))+' м';
-}else{lbl='Готов';}
+}else if(m==='warp'&&S.wp&&S.wp.from){var wa=S.wp.from.alt+(S.wp.t-S.wp.t0)*3200;f=1;cls='meter alt';lbl='Высота '+Math.round(wa/4)+' м';}
+else{lbl='Готов';}
 elFill.style.width=(clamp(f,0,1)*100).toFixed(1)+'%';
 if(elMeter.className!==cls)elMeter.className=cls;
 if(elMk.textContent!==lbl)elMk.textContent=lbl;

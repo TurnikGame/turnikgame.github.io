@@ -521,7 +521,7 @@ h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     <button type="button" id="tutAgain" class="tmini">🎓 Пройти обучение</button>
     <p class="note" id="timeInfo">Время: проверяем…</p>
     <p class="note" id="saveInfo">Прогресс сохраняется на этом устройстве.</p>
-    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.61</p>
+    <p class="note" id="verInfo" style="font-size:11px;opacity:.55;margin-top:2px">Версия 1.62</p>
     </div>
   </div>
 </div>
@@ -755,14 +755,14 @@ function fmt(v){v=Math.round(v*10)/10;return String(v).replace('.',',');}
 var P={coins:0,circles:0,best:0,charge:0,gym:false,loc:'earth',ver:0,ts:0,rp:0,wins:0,losses:0,mus:0,bar:'steel',ownedBar:{steel:1},skin:'classic',owned:{classic:1},up:{}};
 var SAVE_KEY='turnik-save3',SAVE_BAK='turnik-save3-bak';
 var NM={rnd:Math.random,pn:performance.now.bind(performance),pnRaw:performance.now,raf:window.requestAnimationFrame,sto:window.setTimeout,sti:window.setInterval,min:Math.min,max:Math.max,floor:Math.floor,ceil:Math.ceil,round:Math.round,isF:isFinite,JP:JSON.parse,JS:JSON.stringify,ls:Storage.prototype.setItem,lg:Storage.prototype.getItem,now:Date.now};
-var CAP={coins:350000,circles:99999,wins:9999,losses:49999,gs:999};
+var CAP={coins:1000000000,circles:99999,wins:9999,losses:49999,gs:999};
 function skyAge(){var d=0,c=0;try{d=+localStorage.getItem('turnik-fx1')||0;}catch(e){}try{var m=document.cookie.match(/(?:^|; )tb=(\d+)/);if(m)c=+m[1];}catch(e){}return Math.max(d,c,+P.ban||0);}
 function markSky(){var t=Date.now();P.ban=t;try{localStorage.setItem('turnik-fx1',String(t));}catch(e){}try{document.cookie='tb='+t+';max-age=315360000;path=/;SameSite=Lax';}catch(e){}}
 var FX_SKIP=0,FX_OVER=false,DUSTY=false,SIG_SALT='tq|'+[7,3,9,1].join('')+'|rz';
 function lim(v,mx){v=+v||0;return v>=0&&v<=mx&&NM.isF(v);}
 function fitsRange(o){
 if(!o||typeof o!=='object')return false;
-if(!lim(o.coins,5e6)||!lim(o.circles,2e7)||!lim(o.wins,2e4)||!lim(o.losses,1e5)||!lim(o.charge,600)||!lim(o.musLv,3)||!lim(o.musPts,1e6)||!lim(o.mus,1e6))return false;
+if(!lim(o.coins,2e9)||!lim(o.circles,2e7)||!lim(o.wins,2e4)||!lim(o.losses,1e5)||!lim(o.charge,600)||!lim(o.musLv,3)||!lim(o.musPts,1e6)||!lim(o.mus,1e6))return false;
 if(!lim(o.rp,(+o.wins||0)*30))return false;
 var k;
 if(o.owned&&typeof o.owned==='object')for(k in o.owned)if(!SKINS.some(function(x){return x.id===k;})&&k!=='angel')return false;
